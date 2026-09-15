@@ -5,12 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
 public record UpdateUserDto(
-        @NotBlank(message = "name can't be blank")
-        @Length(max = 120 )
+        @Length(min = 1, max = 120, message = "name must be between 1 and 120 characters")
         String name,
-        @NotBlank(message = "email can't be blank")
         @Email(message = "email must be a valid email")
-        @Length(max = 160)
+        @Length(min = 1, max = 160, message = "email must be between 1 and 160 characters")
         String email
 ) {
 }

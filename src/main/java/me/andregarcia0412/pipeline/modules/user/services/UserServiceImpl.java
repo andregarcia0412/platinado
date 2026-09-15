@@ -6,8 +6,11 @@ import me.andregarcia0412.pipeline.modules.user.dto.UpdateUserDto;
 import me.andregarcia0412.pipeline.modules.user.entities.User;
 import me.andregarcia0412.pipeline.modules.user.repositories.UserRepository;
 import me.andregarcia0412.pipeline.shared.exception.ConflictException;
+import me.andregarcia0412.pipeline.shared.exception.NotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -38,26 +41,59 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ReturnUserDto findById(Integer id) {
-        return null;
+        Optional<User> user = userRepository.findById(id);
+        if(user.isEmpty()) {
+            throw new NotFoundException("User not found");
+        }
+
+        return ReturnUserDto.fromEntity(user.get());
     }
 
     @Override
     public User findByEmail(String email) {
-        return null;
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.orElse(null);
     }
 
     @Override
     public boolean existsByEmail(String email) {
-        return false;
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.isPresent();
     }
 
     @Override
     public ReturnUserDto updateById(Integer id, UpdateUserDto updateUserDto) {
-        return null;
+        Optional<User> user = userRepository.findById(id);
+        if(user.isEmpty()) {
+            throw new NotFoundException("User not found");
+        }
+
+        User entity = user.get();
+
+        if(updateUserDto.name() != null) {
+            entity.setName(updateUserDto.name());
+        }
+
+        if(updateUserDto.email() != null && !updateUserDto.email().equals(entity.getEmail())) {
+            if(userRepository.existsByEmail(updateUserDto.email())) {
+                throw new ConflictException("Email already in use");
+            }
+
+            entity.setEmail(updateUserDto.email());
+        }
+
+        return ReturnUserDto.fromEntity(userRepository.save(entity));
     }
 
     @Override
     public ReturnUserDto deleteById(Integer id) {
-        return null;
+        Optional<User> user = userRepository.findById(id);
+        if(user.isEmpty()) {
+            throw new NotFoundException("User not found");
+        }
+
+        User deleted = user.get();
+        userRepository.delete(deleted);
+        return ReturnUserDto.fromEntity(deleted);
     }
 }
