@@ -5,8 +5,8 @@ import me.andregarcia0412.pipeline.modules.user.dto.ReturnUserDto;
 import me.andregarcia0412.pipeline.modules.user.dto.UpdateUserDto;
 import me.andregarcia0412.pipeline.modules.user.entities.User;
 import me.andregarcia0412.pipeline.modules.user.repositories.UserRepository;
-import me.andregarcia0412.pipeline.shared.exception.ConflictException;
-import me.andregarcia0412.pipeline.shared.exception.NotFoundException;
+import me.andregarcia0412.pipeline.shared.exception.exceptions.ConflictException;
+import me.andregarcia0412.pipeline.shared.exception.exceptions.NotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
