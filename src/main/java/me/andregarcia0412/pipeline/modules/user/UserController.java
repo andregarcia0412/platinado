@@ -11,7 +11,7 @@ import jakarta.validation.Valid;
 import me.andregarcia0412.pipeline.modules.user.dto.CreateUserDto;
 import me.andregarcia0412.pipeline.modules.user.dto.ReturnUserDto;
 import me.andregarcia0412.pipeline.modules.user.dto.UpdateUserDto;
-import me.andregarcia0412.pipeline.modules.user.services.IUserService;
+import me.andregarcia0412.pipeline.modules.user.interfaces.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

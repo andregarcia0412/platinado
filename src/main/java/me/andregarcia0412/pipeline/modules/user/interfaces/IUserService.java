@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.modules.user.services;
+package me.andregarcia0412.pipeline.modules.user.interfaces;
 
 import me.andregarcia0412.pipeline.modules.user.dto.CreateUserDto;
 import me.andregarcia0412.pipeline.modules.user.dto.ReturnUserDto;
