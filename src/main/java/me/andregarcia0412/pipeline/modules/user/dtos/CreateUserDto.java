@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.modules.user.dto;
+package me.andregarcia0412.pipeline.modules.user.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
