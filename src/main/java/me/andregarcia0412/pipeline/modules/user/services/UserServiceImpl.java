@@ -1,100 +1,57 @@
 package me.andregarcia0412.pipeline.modules.user.services;
 
-import me.andregarcia0412.pipeline.modules.user.dto.CreateUserDto;
-import me.andregarcia0412.pipeline.modules.user.dto.ReturnUserDto;
-import me.andregarcia0412.pipeline.modules.user.dto.UpdateUserDto;
+import me.andregarcia0412.pipeline.modules.user.dtos.CreateUserDto;
+import me.andregarcia0412.pipeline.modules.user.dtos.ReturnUserDto;
+import me.andregarcia0412.pipeline.modules.user.dtos.UpdateUserDto;
 import me.andregarcia0412.pipeline.modules.user.entities.User;
 import me.andregarcia0412.pipeline.modules.user.interfaces.IUserService;
-import me.andregarcia0412.pipeline.modules.user.repositories.JpaUserRepository;
-import me.andregarcia0412.pipeline.shared.exception.exceptions.ConflictException;
-import me.andregarcia0412.pipeline.shared.exception.exceptions.NotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import me.andregarcia0412.pipeline.modules.user.usecases.*;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService {
-    private final JpaUserRepository jpaUserRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final CreateUserUseCase createUserUseCase;
+    private final FindUserByIdUseCase findUserByIdUseCase;
+    private final FindUserByEmailUseCase findUserByEmailUseCase;
+    private final UpdateUserByIdUseCase updateUserByIdUseCase;
+    private final DeleteUserUseCase deleteUserUseCase;
 
-    public UserServiceImpl(JpaUserRepository jpaUserRepository, PasswordEncoder passwordEncoder) {
-        this.jpaUserRepository = jpaUserRepository;
-        this.passwordEncoder = passwordEncoder;
+    public UserServiceImpl(
+            CreateUserUseCase createUserUseCase,
+            FindUserByIdUseCase findUserByIdUseCase,
+            FindUserByEmailUseCase findUserByEmailUseCase,
+            UpdateUserByIdUseCase updateUserByIdUseCase,
+            DeleteUserUseCase deleteUserUseCase
+    ) {
+        this.createUserUseCase = createUserUseCase;
+        this.findUserByIdUseCase = findUserByIdUseCase;
+        this.findUserByEmailUseCase = findUserByEmailUseCase;
+        this.updateUserByIdUseCase = updateUserByIdUseCase;
+        this.deleteUserUseCase = deleteUserUseCase;
     }
 
     @Override
     public ReturnUserDto create(CreateUserDto createUserDto) {
-        if(jpaUserRepository.existsByEmail(createUserDto.email())) {
-            throw new ConflictException("Email already in use");
-        }
-
-        return ReturnUserDto.fromEntity(
-                jpaUserRepository.save(
-                        new User(
-                                createUserDto.name(),
-                                createUserDto.email(),
-                                passwordEncoder.encode(createUserDto.password())
-                        )
-                )
-        );
+        return ReturnUserDto.fromEntity(createUserUseCase.execute(createUserDto));
     }
 
     @Override
     public ReturnUserDto findById(Integer id) {
-        Optional<User> user = jpaUserRepository.findById(id);
-        if(user.isEmpty()) {
-            throw new NotFoundException("User not found");
-        }
-
-        return ReturnUserDto.fromEntity(user.get());
+        return ReturnUserDto.fromEntity(findUserByIdUseCase.execute(id));
     }
 
     @Override
     public User findByEmail(String email) {
-        Optional<User> user = jpaUserRepository.findByEmail(email);
-        return user.orElse(null);
-    }
-
-    @Override
-    public boolean existsByEmail(String email) {
-        Optional<User> user = jpaUserRepository.findByEmail(email);
-        return user.isPresent();
+        return findUserByEmailUseCase.execute(email);
     }
 
     @Override
     public ReturnUserDto updateById(Integer id, UpdateUserDto updateUserDto) {
-        Optional<User> user = jpaUserRepository.findById(id);
-        if(user.isEmpty()) {
-            throw new NotFoundException("User not found");
-        }
-
-        User entity = user.get();
-
-        if(updateUserDto.name() != null) {
-            entity.setName(updateUserDto.name());
-        }
-
-        if(updateUserDto.email() != null && !updateUserDto.email().equals(entity.getEmail())) {
-            if(jpaUserRepository.existsByEmail(updateUserDto.email())) {
-                throw new ConflictException("Email already in use");
-            }
-
-            entity.setEmail(updateUserDto.email());
-        }
-
-        return ReturnUserDto.fromEntity(jpaUserRepository.save(entity));
+        return ReturnUserDto.fromEntity(updateUserByIdUseCase.execute(id, updateUserDto));
     }
 
     @Override
-    public ReturnUserDto deleteById(Integer id) {
-        Optional<User> user = jpaUserRepository.findById(id);
-        if(user.isEmpty()) {
-            throw new NotFoundException("User not found");
-        }
-
-        User deleted = user.get();
-        jpaUserRepository.delete(deleted);
-        return ReturnUserDto.fromEntity(deleted);
+    public void deleteById(Integer id) {
+        deleteUserUseCase.execute(id);
     }
 }

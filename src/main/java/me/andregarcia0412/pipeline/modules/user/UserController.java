@@ -8,9 +8,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import me.andregarcia0412.pipeline.modules.user.dto.CreateUserDto;
-import me.andregarcia0412.pipeline.modules.user.dto.ReturnUserDto;
-import me.andregarcia0412.pipeline.modules.user.dto.UpdateUserDto;
+import me.andregarcia0412.pipeline.modules.user.dtos.CreateUserDto;
+import me.andregarcia0412.pipeline.modules.user.dtos.ReturnUserDto;
+import me.andregarcia0412.pipeline.modules.user.dtos.UpdateUserDto;
 import me.andregarcia0412.pipeline.modules.user.interfaces.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -88,19 +88,16 @@ public class UserController {
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Delete a user by id",
-            description = "Deletes the user matching the given id and returns the deleted record."
+            description = "Deletes the user matching the given id. Returns no content on success."
     )
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "User deleted",
-                    content = @Content(schema = @Schema(implementation = ReturnUserDto.class))
-            ),
+            @ApiResponse(responseCode = "204", description = "User deleted", content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    public ResponseEntity<ReturnUserDto> deleteById(
+    public ResponseEntity<Void> deleteById(
             @Parameter(description = "Id of the user", example = "1") @PathVariable Integer id
     ) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.deleteById(id));
+        userService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
