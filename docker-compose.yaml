@@ -1,6 +1,7 @@
 services:
   db:
     image: mysql:8.0
+    container_name: platinado-mysql
     restart: always
     environment:
       TZ: ${TZ}
@@ -29,6 +30,7 @@ services:
 
   redis:
     image: redis:7-alpine
+    container_name: platinado-redis
     restart: always
     ports:
       - "${REDIS_PORT:-6379}:6379"
@@ -39,7 +41,27 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  minio:
+    image: quay.io/minio/minio
+    container_name: platinado-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY}
+      TZ: ${TZ:-America/Fortaleza}
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: [ "CMD", "mc", "ready", "local" ]
+      interval: 5s
+      timeout: 3s
+      retries: 20
 
 volumes:
   mysql_data:
   redis_data:
+  minio-data:
