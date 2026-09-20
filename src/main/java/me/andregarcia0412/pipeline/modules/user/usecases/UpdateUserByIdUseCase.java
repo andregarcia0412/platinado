@@ -24,8 +24,11 @@ public class UpdateUserByIdUseCase {
 
         User entity = user.get();
 
-        if(updateUserDto.name() != null) {
-            entity.setName(updateUserDto.name());
+        if(updateUserDto.username() != null && !updateUserDto.username().equals(entity.getUsername())) {
+            if(userRepository.existsByUsername(updateUserDto.username()))
+                throw new ConflictException("Username already in use");
+
+            entity.setUsername(updateUserDto.username());
         }
 
         if(updateUserDto.email() != null && !updateUserDto.email().equals(entity.getEmail())) {
@@ -33,6 +36,10 @@ public class UpdateUserByIdUseCase {
                 throw new ConflictException("Email already in use");
 
             entity.setEmail(updateUserDto.email());
+        }
+
+        if(updateUserDto.bio() != null) {
+            entity.setBio(updateUserDto.bio());
         }
 
         return userRepository.save(entity);

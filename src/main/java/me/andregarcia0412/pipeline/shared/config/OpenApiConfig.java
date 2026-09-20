@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @OpenAPIDefinition(
         info = @Info(
-                title="Pipeline API",
+                title="Platinado API",
                 version = "1.0.0"
         )
 )

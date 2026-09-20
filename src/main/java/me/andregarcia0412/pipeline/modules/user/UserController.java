@@ -29,7 +29,7 @@ public class UserController {
     @PostMapping
     @Operation(
             summary = "Create a user",
-            description = "Registers a new user. The email must not already be in use and the password is stored hashed."
+            description = "Registers a new user. The username and the email must both be free, and the password is stored hashed."
     )
     @ApiResponses({
             @ApiResponse(
@@ -38,7 +38,7 @@ public class UserController {
                     content = @Content(schema = @Schema(implementation = ReturnUserDto.class))
             ),
             @ApiResponse(responseCode = "400", description = "Invalid payload", content = @Content),
-            @ApiResponse(responseCode = "409", description = "Email already in use", content = @Content)
+            @ApiResponse(responseCode = "409", description = "Username or email already in use", content = @Content)
     })
     public ResponseEntity<ReturnUserDto> create(@RequestBody @Valid CreateUserDto createUserDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(createUserDto));
@@ -47,7 +47,7 @@ public class UserController {
     @GetMapping("/{id}")
     @Operation(
             summary = "Find a user by id",
-            description = "Returns the user matching the given id. The password is never exposed."
+            description = "Returns the user matching the given id. The password hash is never exposed."
     )
     @ApiResponses({
             @ApiResponse(
@@ -66,7 +66,7 @@ public class UserController {
     @PatchMapping("/{id}")
     @Operation(
             summary = "Update a user by id",
-            description = "Partially updates a user. Only the fields present in the payload are changed."
+            description = "Partially updates a user. Only the fields present in the payload are changed. Resending the current username or email is a no-op rather than a conflict."
     )
     @ApiResponses({
             @ApiResponse(
@@ -76,7 +76,7 @@ public class UserController {
             ),
             @ApiResponse(responseCode = "400", description = "Invalid payload", content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
-            @ApiResponse(responseCode = "409", description = "Email already in use", content = @Content)
+            @ApiResponse(responseCode = "409", description = "Username or email already taken by another user", content = @Content)
     })
     public ResponseEntity<ReturnUserDto> updateById(
             @Parameter(description = "Id of the user", example = "1") @PathVariable Integer id,

@@ -1,8 +1,6 @@
 package me.andregarcia0412.pipeline.shared.security;
 
-import me.andregarcia0412.pipeline.modules.user.entities.User;
 import me.andregarcia0412.pipeline.modules.user.interfaces.IUserRepository;
-import me.andregarcia0412.pipeline.shared.exception.exceptions.NotFoundException;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,12 +16,10 @@ public class AuthorizationService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public User findByEmail(String email) {
-        return this.userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found"));
-    }
-
     @Override
     public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
-        return this.userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return this.userRepository.findByUsername(username)
+                .map(UserPrincipal::fromEntity)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

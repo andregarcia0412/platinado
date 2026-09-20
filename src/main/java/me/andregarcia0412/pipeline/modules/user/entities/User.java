@@ -2,31 +2,36 @@ package me.andregarcia0412.pipeline.modules.user.entities;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(
         name = "user",
-        uniqueConstraints = @UniqueConstraint(name = "uk_user_email", columnNames = "email")
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uq_user_email", columnNames = "email"),
+                @UniqueConstraint(name = "uq_user_username", columnNames = "username")
+        }
 )
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 120)
-    private String name;
+    @Column(nullable = false, length = 120, unique = true)
+    private String username;
 
-    @Column(nullable = false, length = 160)
+    @Column(nullable = false, length = 120)
     private String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "password_hash", nullable = false, length = 255)
     private String password;
+
+    @Column(length = 512)
+    private String bio;
+
+    @Column(name ="avatar_storage_key", length = 255)
+    private String storageKey;
 
     @CreationTimestamp
     @Column(name="created_at", nullable = false, updatable = false)
@@ -34,8 +39,8 @@ public class User implements UserDetails {
 
     protected User() {};
 
-    public User(String name, String email, String password) {
-        this.name = name;
+    public User(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
     }
@@ -44,34 +49,32 @@ public class User implements UserDetails {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
     public String getEmail() {
         return email;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
     public String getPassword() {
         return password;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public String getStorageKey() {
+        return storageKey;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setEmail(String email) {
@@ -80,5 +83,13 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setStorageKey(String storageKey) {
+        this.storageKey = storageKey;
     }
 }

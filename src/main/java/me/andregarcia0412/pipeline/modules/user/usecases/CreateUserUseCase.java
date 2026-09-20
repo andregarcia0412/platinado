@@ -21,9 +21,12 @@ public class CreateUserUseCase {
         if(userRepository.existsByEmail(createUserDto.email()))
             throw new ConflictException("Email already in use");
 
+        if(userRepository.existsByUsername(createUserDto.username()))
+            throw new ConflictException("Username already in use");
+
         return userRepository.save(
                 new User(
-                        createUserDto.name(),
+                        createUserDto.username(),
                         createUserDto.email(),
                         passwordEncoder.encode(createUserDto.password())
                 )

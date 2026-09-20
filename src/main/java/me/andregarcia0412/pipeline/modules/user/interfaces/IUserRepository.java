@@ -8,7 +8,9 @@ public interface IUserRepository {
     User save(User user);
     Optional<User> findById(Integer id);
     Optional<User> findByEmail(String email);
+    Optional<User> findByUsername(String username);
     boolean existsById(Integer id);
     boolean existsByEmail(String email);
+    boolean existsByUsername(String username);
     void deleteById(Integer id);
 }

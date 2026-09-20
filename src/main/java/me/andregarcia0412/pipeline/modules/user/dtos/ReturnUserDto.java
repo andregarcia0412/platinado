@@ -6,11 +6,20 @@ import java.time.LocalDateTime;
 
 public record ReturnUserDto(
         Integer id,
-        String name,
+        String username,
         String email,
+        String bio,
+        String storageKey,
         LocalDateTime createdAt
 ) {
     public static ReturnUserDto fromEntity(User user) {
-        return new ReturnUserDto(user.getId(), user.getName(), user.getEmail(), user.getCreatedAt());
+        return new ReturnUserDto(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getBio(),
+                user.getStorageKey(),
+                user.getCreatedAt()
+        );
     }
 }
