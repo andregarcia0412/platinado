@@ -1,60 +1,132 @@
-CREATE TABLE `user` (
-                        id          INT AUTO_INCREMENT PRIMARY KEY,
-                        name        VARCHAR(120) NOT NULL,
-                        email       VARCHAR(160) NOT NULL,
-                        password    VARCHAR(255) NOT NULL,
-                        created_at  DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-                        CONSTRAINT uk_user_email UNIQUE (email)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE user (
+                      id INT NOT NULL AUTO_INCREMENT,
+                      username VARCHAR(120) NOT NULL,
+                      email VARCHAR(120) NOT NULL,
+                      password_hash VARCHAR(255) NOT NULL,
+                      bio VARCHAR(512) NULL,
+                      avatar_storage_key VARCHAR(255) NULL,
+                      created_at DATETIME NOT NULL DEFAULT NOW(),
+                      PRIMARY KEY (id),
+                      UNIQUE INDEX uq_user_username (username ASC) VISIBLE,
+                      UNIQUE INDEX uq_user_email (email ASC) VISIBLE)
+    ENGINE = InnoDB;
 
-CREATE TABLE application (
-                             id             INT AUTO_INCREMENT PRIMARY KEY,
-                             user_id        INT NOT NULL,
-                             title          VARCHAR(160) NOT NULL,
-                             company_name   VARCHAR(160) NOT NULL,
-                             description    VARCHAR(512),
-                             job_url        VARCHAR(500),
-                             status         VARCHAR(20) NOT NULL,
-                             salary_min     DECIMAL(18,2),
-                             salary_max     DECIMAL(18,2),
-                             board_position INT NOT NULL,
-                             applied_at     DATE NOT NULL,
-                             due_date       DATETIME(6),
-                             created_at     DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-                             updated_at     DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-                             CONSTRAINT chk_application_status CHECK (status IN
-                                                                      ('APPLIED','SCREENING','TECHNICAL','FINAL','OFFER','REJECTED','GHOSTED'))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE game_type (
+                           id INT NOT NULL AUTO_INCREMENT,
+                           type VARCHAR(45) NOT NULL,
+                           PRIMARY KEY (id),
+                           UNIQUE INDEX uq_game_type_type (type ASC) VISIBLE)
+    ENGINE = InnoDB;
 
-CREATE TABLE curriculum (
-                            id           INT AUTO_INCREMENT PRIMARY KEY,
-                            user_id      INT NOT NULL,
-                            label        VARCHAR(80) NOT NULL,
-                            storage_key  VARCHAR(255) NOT NULL,
-                            created_at   DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE game (
+                      id INT NOT NULL AUTO_INCREMENT,
+                      name VARCHAR(200) NOT NULL,
+                      slug VARCHAR(255) NOT NULL,
+                      summary LONGTEXT NULL,
+                      first_release_date DATETIME NULL,
+                      cover_image_storage_key VARCHAR(255) NULL,
+                      game_type_id INT NOT NULL,
+                      created_at DATETIME NOT NULL DEFAULT NOW(),
+                      PRIMARY KEY (id),
+                      UNIQUE INDEX uq_game_slug (slug ASC) VISIBLE,
+                      INDEX fk_game_game_type1_idx (game_type_id ASC) VISIBLE,
+                      CONSTRAINT fk_game_game_type1
+                          FOREIGN KEY (game_type_id)
+                              REFERENCES game_type (id)
+                              ON DELETE RESTRICT
+                              ON UPDATE CASCADE)
+    ENGINE = InnoDB;
 
-CREATE TABLE application_curriculum (
-                                        application_id INT NOT NULL,
-                                        curriculum_id  INT NOT NULL,
-                                        PRIMARY KEY (application_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE game_completion_status (
+                                        id INT NOT NULL AUTO_INCREMENT,
+                                        status VARCHAR(45) NOT NULL,
+                                        PRIMARY KEY (id),
+                                        UNIQUE INDEX uq_game_completion_status_status (status ASC) VISIBLE)
+    ENGINE = InnoDB;
 
-ALTER TABLE application
-    ADD CONSTRAINT fk_application_user
-        FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE CASCADE;
+CREATE TABLE user_game (
+                           id_user INT NOT NULL,
+                           id_game INT NOT NULL,
+                           id_game_completion_status INT NOT NULL,
+                           hours_played DECIMAL(18,2) NULL,
+                           starting_date DATETIME NULL,
+                           finishing_date DATETIME NULL,
+                           grade DECIMAL(3,1) NULL,
+                           note LONGTEXT NULL,
+                           created_at DATETIME NOT NULL DEFAULT NOW(),
+                           PRIMARY KEY (id_user, id_game),
+                           INDEX fk_User_has_Game_Game1_idx (id_game ASC) VISIBLE,
+                           INDEX fk_UserGame_GameCompletionStatus1_idx (id_game_completion_status ASC) VISIBLE,
+                           CONSTRAINT fk_User_has_Game_User
+                               FOREIGN KEY (id_user)
+                                   REFERENCES user (id)
+                                   ON DELETE CASCADE
+                                   ON UPDATE CASCADE,
+                           CONSTRAINT fk_User_has_Game_Game1
+                               FOREIGN KEY (id_game)
+                                   REFERENCES game (id)
+                                   ON DELETE RESTRICT
+                                   ON UPDATE CASCADE,
+                           CONSTRAINT fk_UserGame_GameCompletionStatus1
+                               FOREIGN KEY (id_game_completion_status)
+                                   REFERENCES game_completion_status (id)
+                                   ON DELETE RESTRICT
+                                   ON UPDATE CASCADE)
+    ENGINE = InnoDB;
 
-ALTER TABLE curriculum
-    ADD CONSTRAINT fk_curriculum_user
-        FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE CASCADE;
+CREATE TABLE game_genre (
+                            id INT NOT NULL AUTO_INCREMENT,
+                            genre VARCHAR(45) NOT NULL,
+                            PRIMARY KEY (id),
+                            UNIQUE INDEX uq_game_genre_genre (genre ASC) VISIBLE)
+    ENGINE = InnoDB;
 
-ALTER TABLE application_curriculum
-    ADD CONSTRAINT fk_ac_application
-        FOREIGN KEY (application_id) REFERENCES application (id) ON DELETE CASCADE,
-    ADD CONSTRAINT fk_ac_curriculum
-        FOREIGN KEY (curriculum_id) REFERENCES curriculum (id) ON DELETE RESTRICT;
+CREATE TABLE game_has_gamegenre (
+                                    id_game INT NOT NULL,
+                                    id_game_genre INT NOT NULL,
+                                    PRIMARY KEY (id_game, id_game_genre),
+                                    INDEX fk_Game_has_GameGenre_GameGenre1_idx (id_game_genre ASC) VISIBLE,
+                                    CONSTRAINT fk_Game_has_GameGenre_Game1
+                                        FOREIGN KEY (id_game)
+                                            REFERENCES game (id)
+                                            ON DELETE CASCADE
+                                            ON UPDATE CASCADE,
+                                    CONSTRAINT fk_Game_has_GameGenre_GameGenre1
+                                        FOREIGN KEY (id_game_genre)
+                                            REFERENCES game_genre (id)
+                                            ON DELETE CASCADE
+                                            ON UPDATE CASCADE)
+    ENGINE = InnoDB;
 
-CREATE INDEX idx_application_board ON application (user_id, status, board_position);
-CREATE INDEX idx_application_applied ON application (user_id, applied_at DESC);
-CREATE INDEX idx_curriculum_user ON curriculum (user_id);
-CREATE INDEX idx_ac_curriculum ON application_curriculum (curriculum_id);
+CREATE TABLE company (
+                         id INT NOT NULL AUTO_INCREMENT,
+                         name VARCHAR(200) NOT NULL,
+                         slug VARCHAR(255) NOT NULL,
+                         logo_storage_key VARCHAR(255) NULL,
+                         country VARCHAR(100) NULL,
+                         created_at DATETIME NOT NULL DEFAULT NOW(),
+                         PRIMARY KEY (id),
+                         UNIQUE INDEX uq_company_slug (slug ASC) VISIBLE)
+    ENGINE = InnoDB;
+
+CREATE TABLE game_company (
+                              game_id INT NOT NULL,
+                              company_id INT NOT NULL,
+                              is_developer TINYINT NOT NULL DEFAULT 0,
+                              is_publisher TINYINT NOT NULL DEFAULT 0,
+                              is_porting TINYINT NOT NULL DEFAULT 0,
+                              is_supporting TINYINT NOT NULL DEFAULT 0,
+                              created_at DATETIME NOT NULL DEFAULT NOW(),
+                              PRIMARY KEY (game_id, company_id),
+                              INDEX fk_game_has_company_company1_idx (company_id ASC) VISIBLE,
+                              CONSTRAINT fk_game_has_company_game1
+                                  FOREIGN KEY (game_id)
+                                      REFERENCES game (id)
+                                      ON DELETE CASCADE
+                                      ON UPDATE CASCADE,
+                              CONSTRAINT fk_game_has_company_company1
+                                  FOREIGN KEY (company_id)
+                                      REFERENCES company (id)
+                                      ON DELETE CASCADE
+                                      ON UPDATE CASCADE)
+    ENGINE = InnoDB;
