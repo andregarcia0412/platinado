@@ -1,0 +1,46 @@
+<section class="flex flex-col gap-4">
+  <div class="flex flex-col gap-1">
+    <h2 class="text-2xl text-fg font-medium">Bem-vindo de volta</h2>
+    <p class="text-fg-muted">Sua estante continua exatamente de onde você parou</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <app-auth-input
+      [control]="form.controls.username"
+      [errors]="messages.username"
+      type="text"
+      placeholder="usuario_exemplo123"
+      autocomplete="username"
+      label="Nome de usuário"
+    />
+
+    <app-auth-input
+      [control]="form.controls.password"
+      [errors]="messages.password"
+      type="password"
+      placeholder="••••••••"
+      autocomplete="password"
+      label="Nome de usuário"
+    />
+
+    <label class="flex cursor-pointer gap-2">
+      <input type="checkbox" />
+      <span class="text-sm text-fg-muted">Manter conectado neste computador</span>
+    </label>
+
+    <button
+      class="cursor-pointer py-2 text-sm font-bold bg-accent/20 border border-status-playing text-accent-hover rounded-lg hover:bg-accent/30"
+    >
+      Entrar
+    </button>
+
+    <a class="cursor-pointer text-sm underline text-status-backlog">Esqueci minha senha</a>
+
+    <div class="h-px w-full bg-line"></div>
+
+    <p class="text-fg-muted">
+      Ainda não tem conta?
+      <a class="text-accent hover:underline hover:text-accent-hover cursor-pointer">Criar conta</a>
+    </p>
+  </form>
+</section>

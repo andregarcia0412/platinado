@@ -1,0 +1,72 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Satoshi Variable';
+  src: url('../public/fonts/Satoshi-Variable.ttf') format('truetype-variations');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi Variable';
+  src: url('../public/fonts/Satoshi-VariableItalic.ttf') format('truetype-variations');
+  font-weight: 300 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: 'Satoshi Variable', 'Inter', sans-serif;
+  --color-bg: #1a1b26;
+  --color-bg-deep: #16161e;
+  --color-surface: #1f2335;
+  --color-surface-2: #24283b;
+  --color-line: #292e42;
+  --color-line-strong: #3b4261;
+  --color-label: #a9b1d6;
+
+  --color-fg: #c0caf5;
+  --color-fg-strong: #e4ecff;
+  --color-fg-muted: #8b94b8;
+  --color-fg-faint: #565f89;
+
+  --color-accent: #7aa2f7;
+  --color-accent-hover: #9eb9fa;
+  --color-accent-active: #c3d4fb;
+  --color-accent-ink: #1a1b26;
+
+  --color-purple: #bb9af7;
+  --color-cyan: #7dcfff;
+  --color-teal: #2ac3de;
+  --color-green: #9ece6a;
+  --color-yellow: #e0af68;
+  --color-orange: #ff9e64;
+  --color-red: #f7768e;
+
+  --color-success: #9ece6a;
+  --color-warning: #e0af68;
+  --color-danger: #f7768e;
+  --color-info: #7dcfff;
+
+  --color-status-platinum: #e0af68;
+  --color-status-finished: #9ece6a;
+  --color-status-playing: #7aa2f7;
+  --color-status-backlog: #8b94b8;
+  --color-status-dropped: #f7768e;
+  --color-rating-star: #e0af68;
+}
+
+:root {
+  --tint-accent: rgba(122, 162, 247, 0.12);
+  --tint-accent-strong: rgba(122, 162, 247, 0.22);
+  --tint-success: rgba(158, 206, 106, 0.12);
+  --tint-warning: rgba(224, 175, 104, 0.12);
+  --tint-danger: rgba(247, 118, 142, 0.1);
+  --tint-purple: rgba(187, 154, 247, 0.12);
+}
+
+html {
+  color-scheme: dark;
+  accent-color: var(--color-accent);
+}

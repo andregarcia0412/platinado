@@ -1,0 +1,40 @@
+<div class="flex flex-col gap-1">
+  @if (type() !== 'password') {
+    <label [for]="inputId" class="text-xs text-label">{{ label() }}</label>
+    <input
+      [id]="inputId"
+      [formControl]="control()"
+      [type]="type()"
+      [placeholder]="placeholder()"
+      [autocomplete]="autocomplete()"
+      class="bg-bg-deep border border-line text-fg outline-none rounded-lg py-2 px-3"
+    />
+  } @else {
+    <label [for]="inputId" class="text-xs text-label">{{ label() }}</label>
+    <div class="flex justify-between bg-bg-deep border border-line text-fg rounded-lg py-2 px-3">
+      <input
+        [id]="inputId"
+        [formControl]="control()"
+        [type]="showPassword() ? 'text' : 'password'"
+        [placeholder]="placeholder()"
+        [autocomplete]="autocomplete()"
+        class="flex-1 outline-none"
+      />
+
+      @let iconClass = 'cursor-pointer ml-2';
+      @if (!showPassword()) {
+        <button type="button" (click)="toggleShowPassword()">
+          <img [class]="iconClass" src="/icons/visibility.svg" alt="" width="24" height="24" />
+        </button>
+      } @else {
+        <button type="button" (click)="toggleShowPassword()">
+          <img [class]="iconClass" src="/icons/visibility_off.svg" alt="" width="24" height="24" />
+        </button>
+      }
+    </div>
+  }
+
+  @if (message(); as text) {
+    <span class="text-sm text-danger">{{ text }}</span>
+  }
+</div>
