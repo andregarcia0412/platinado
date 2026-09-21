@@ -1,9 +1,9 @@
-package me.andregarcia0412.pipeline.modules.auth.dto;
+package me.andregarcia0412.pipeline.modules.auth.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 
 public record RefreshRequestDto(
-        @NotBlank(message = "accessToken can't be blank")
-        String accessToken
+        @NotBlank(message = "refreshToken can't be blank")
+        String refreshToken
 ) {
 }

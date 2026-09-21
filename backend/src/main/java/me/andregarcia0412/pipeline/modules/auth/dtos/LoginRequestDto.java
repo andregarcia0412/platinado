@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.modules.auth.dto;
+package me.andregarcia0412.pipeline.modules.auth.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
