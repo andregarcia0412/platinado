@@ -21,7 +21,7 @@ export class RegisterForm {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     },
-    { updateOn: 'submit' },
+    { updateOn: 'blur' },
   );
 
   protected readonly messages = {

@@ -20,7 +20,7 @@ export class LoginForm {
       ],
       password: ['', [Validators.required, Validators.minLength(8)]],
     },
-    { updateOn: 'submit' },
+    { updateOn: 'blur' },
   );
 
   protected readonly messages = {

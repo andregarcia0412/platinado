@@ -16,7 +16,7 @@ export class ForgotPasswordForm {
     {
       email: ['', [Validators.required, Validators.email]],
     },
-    { updateOn: 'submit' },
+    { updateOn: 'blur' },
   );
 
   protected readonly messages = {
