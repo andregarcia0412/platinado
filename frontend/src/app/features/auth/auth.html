@@ -1,1 +1,16 @@
-<ng-container *ngComponentOutlet="form()" />
+<div class="flex items-center justify-around min-h-screen bg-bg-deep">
+  <section class="flex flex-col flex-1 min-h-screen items-center justify-center">
+    <div class="flex flex-col gap-2">
+      <h1 class="text-4xl text-fg font-semibold">
+        Tudo o que você já jogou, <br />
+        guardado em um só lugar.
+      </h1>
+      <p class="text-fg-muted">
+        Registre partidas, dê notas, marque as platinas e <br />
+        acompanhe o que seus amigos estão zerando.
+      </p>
+    </div>
+  </section>
+
+  <ng-container *ngComponentOutlet="form()" />
+</div>

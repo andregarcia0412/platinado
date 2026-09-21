@@ -7,6 +7,7 @@ import { AuthNavigation } from '../../utils/auth-navigation';
   imports: [ReactiveFormsModule, AuthInput],
   selector: 'app-login-form',
   templateUrl: './login-form.html',
+  host: { class: 'flex-1 self-stretch' },
 })
 export class LoginForm {
   private readonly fb = inject(FormBuilder);

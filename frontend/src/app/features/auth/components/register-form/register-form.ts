@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthInput } from '../auth-input/auth-input';
 import { AuthNavigation } from '../../utils/auth-navigation';
+import { AuthInput } from '../auth-input/auth-input';
 
 @Component({
   imports: [ReactiveFormsModule, AuthInput],
   selector: 'app-register-form',
   templateUrl: './register-form.html',
+  host: { class: 'flex-1 self-stretch' },
 })
 export class RegisterForm {
   private readonly fb = inject(FormBuilder);

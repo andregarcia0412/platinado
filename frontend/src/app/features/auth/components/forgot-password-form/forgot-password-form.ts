@@ -7,6 +7,7 @@ import { AuthNavigation } from '../../utils/auth-navigation';
   imports: [ReactiveFormsModule, AuthInput],
   selector: 'app-forgot-password-form',
   templateUrl: './forgot-password-form.html',
+  host: { class: 'flex-1 self-stretch ' },
 })
 export class ForgotPasswordForm {
   private readonly fb = inject(FormBuilder);
