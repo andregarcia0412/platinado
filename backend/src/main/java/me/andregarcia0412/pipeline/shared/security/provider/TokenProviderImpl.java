@@ -4,7 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import me.andregarcia0412.pipeline.modules.user.entities.User;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import me.andregarcia0412.pipeline.shared.security.UserPrincipal;
 import me.andregarcia0412.pipeline.shared.security.exception.JWTGenerationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TokenProviderImpl implements ITokenProvider {
@@ -22,7 +24,7 @@ public class TokenProviderImpl implements ITokenProvider {
     @Value("${api.security.refresh.token.secret}")
     private String refreshSecret;
 
-    public String generateAccessToken(User user) {
+    public String generateAccessToken(UserPrincipal user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(accessSecret);
             return JWT.create()
@@ -39,12 +41,13 @@ public class TokenProviderImpl implements ITokenProvider {
     }
 
     @Override
-    public String generateRefreshToken(User user) {
+    public String generateRefreshToken(UserPrincipal user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(refreshSecret);
             return JWT.create()
                     .withIssuer("platinado-api")
                     .withSubject(user.getUsername())
+                    .withJWTId(UUID.randomUUID().toString())
                     .withClaim("type", "refresh")
                     .withExpiresAt(Date.from(
                             Instant.now().plus(7, ChronoUnit.DAYS)
@@ -71,15 +74,20 @@ public class TokenProviderImpl implements ITokenProvider {
     }
 
     @Override
-    public Optional<String> validateRefreshToken(String token) {
+    public Optional<RefreshTokenClaims> validateRefreshToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(refreshSecret);
-            return Optional.of(JWT.require(algorithm)
+           DecodedJWT jwt = JWT.require(algorithm)
                     .withIssuer("platinado-api")
                     .withClaim("type", "refresh")
                     .build()
-                    .verify(token)
-                    .getSubject());
+                    .verify(token);
+
+           return Optional.of(new RefreshTokenClaims(
+                   jwt.getSubject(),
+                   jwt.getId(),
+                   jwt.getExpiresAtAsInstant()
+           ));
         } catch (JWTVerificationException exception) {
             return Optional.empty();
         }
