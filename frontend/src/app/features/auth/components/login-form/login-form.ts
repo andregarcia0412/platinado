@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthInput } from '../auth-input/auth-input';
+import { AuthNavigation } from '../../utils/auth-navigation';
 
 @Component({
   imports: [ReactiveFormsModule, AuthInput],
@@ -9,6 +10,7 @@ import { AuthInput } from '../auth-input/auth-input';
 })
 export class LoginForm {
   private readonly fb = inject(FormBuilder);
+  protected readonly navigation = inject(AuthNavigation);
 
   protected readonly form = this.fb.nonNullable.group(
     {

@@ -20,7 +20,7 @@
       type="password"
       placeholder="••••••••"
       autocomplete="password"
-      label="Nome de usuário"
+      label="Senha"
     />
 
     <label class="flex cursor-pointer gap-2">
@@ -34,13 +34,21 @@
       Entrar
     </button>
 
-    <a class="cursor-pointer text-sm underline text-status-backlog">Esqueci minha senha</a>
+    <a
+      (click)="navigation.goTo('forgot-password')"
+      class="cursor-pointer text-sm underline text-status-backlog"
+      >Esqueci minha senha</a
+    >
 
     <div class="h-px w-full bg-line"></div>
 
     <p class="text-fg-muted">
       Ainda não tem conta?
-      <a class="text-accent hover:underline hover:text-accent-hover cursor-pointer">Criar conta</a>
+      <a
+        (click)="navigation.goTo('register')"
+        class="text-accent hover:underline hover:text-accent-hover cursor-pointer"
+        >Criar conta</a
+      >
     </p>
   </form>
 </section>
