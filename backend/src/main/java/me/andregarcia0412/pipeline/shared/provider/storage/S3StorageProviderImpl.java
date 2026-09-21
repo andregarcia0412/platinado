@@ -15,12 +15,12 @@ import java.time.Duration;
 import java.util.UUID;
 
 @Service
-public class S3StorageProvider implements StorageProviderPort{
+public class S3StorageProviderImpl implements IStorageProvider {
     private final S3Client s3;
     private final S3Presigner presigner;
     private final String bucket;
 
-    public S3StorageProvider(S3Client s3, S3Presigner presigner, @Value("${storage.bucket}") String bucket) {
+    public S3StorageProviderImpl(S3Client s3, S3Presigner presigner, @Value("${storage.bucket}") String bucket) {
         this.s3 = s3;
         this.presigner = presigner;
         this.bucket = bucket;

@@ -10,11 +10,11 @@ import java.time.Duration;
 import java.util.Optional;
 
 @Component
-public class RedisCacheProvider implements CacheProviderPort {
+public class RedisCacheProviderImpl implements ICacheProvider {
     private final StringRedisTemplate redis;
     private final ObjectMapper mapper;
 
-    public RedisCacheProvider(StringRedisTemplate redis, ObjectMapper mapper) {
+    public RedisCacheProviderImpl(StringRedisTemplate redis, ObjectMapper mapper) {
         this.redis = redis;
         this.mapper = mapper;
     }
