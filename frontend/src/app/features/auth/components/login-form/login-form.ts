@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthInput } from '../auth-input/auth-input';
+import { AuthService } from '../../services/auth-service';
 import { AuthNavigation } from '../../utils/auth-navigation';
 import { hasEmptyField } from '../../utils/has-empty-field';
 import { AuthButton } from '../auth-button/auth-button';
+import { AuthInput } from '../auth-input/auth-input';
 
 @Component({
   imports: [ReactiveFormsModule, AuthInput, AuthButton],
@@ -13,6 +14,8 @@ import { AuthButton } from '../auth-button/auth-button';
 })
 export class LoginForm {
   private readonly fb = inject(FormBuilder);
+  private readonly userService = inject(AuthService);
+
   protected readonly navigation = inject(AuthNavigation);
 
   protected readonly form = this.fb.nonNullable.group({
@@ -34,9 +37,18 @@ export class LoginForm {
     password: { required: 'Senha é obrigatória', minlength: 'Senha precisa de 8 caracteres' },
   };
 
-  protected onSubmit(): void {
+  protected readonly errorMessage = signal<string | null>(null);
+
+  protected async onSubmit(): Promise<void> {
     if (this.form.invalid) {
       return;
+    }
+
+    try {
+      const auth = await this.userService.login(this.form.getRawValue());
+      console.log(auth);
+    } catch (e) {
+      if (e instanceof Error) this.errorMessage.set(e.message);
     }
   }
 }

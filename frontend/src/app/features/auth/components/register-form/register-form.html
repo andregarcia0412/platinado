@@ -29,9 +29,21 @@
         [errors]="messages.password"
         type="password"
         placeholder="••••••••"
-        autocomplete="password"
+        autocomplete="new-password"
         label="Senha"
       />
+
+      <app-auth-input
+        [control]="form.controls.confirmPassword"
+        [errors]="messages.confirmPassword"
+        type="password"
+        placeholder="••••••••"
+        label="Confirmar senha"
+      />
+
+      @if (errorMessage(); as text) {
+        <span class="text-sm text-center text-danger">{{ text }}</span>
+      }
 
       <app-auth-button [disabled]="buttonDisabled()" title="Criar conta" />
 

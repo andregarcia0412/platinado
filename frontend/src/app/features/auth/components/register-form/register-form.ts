@@ -1,5 +1,13 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
+import { AuthService } from '../../services/auth-service';
 import { AuthNavigation } from '../../utils/auth-navigation';
 import { hasEmptyField } from '../../utils/has-empty-field';
 import { AuthButton } from '../auth-button/auth-button';
@@ -13,6 +21,7 @@ import { AuthInput } from '../auth-input/auth-input';
 })
 export class RegisterForm {
   private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
   protected readonly navigation = inject(AuthNavigation);
 
   protected readonly form = this.fb.nonNullable.group({
@@ -22,6 +31,7 @@ export class RegisterForm {
     ],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
+    confirmPassword: ['', [Validators.required, this.passwordMatch]],
   });
 
   protected readonly buttonDisabled = hasEmptyField(this.form);
@@ -34,11 +44,37 @@ export class RegisterForm {
     },
     email: { required: 'E-mail é obrigatório', email: 'E-mail inválido' },
     password: { required: 'Senha é obrigatória', minlength: 'Senha precisa de 8 caracteres' },
+    confirmPassword: { required: 'Confirme sua senha', mismatch: 'As senhas não coincidem' },
   };
 
-  protected onSubmit(): void {
+  protected readonly errorMessage = signal<string | null>(null);
+
+  constructor() {
+    this.form.controls.password.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.form.controls.confirmPassword.updateValueAndValidity());
+  }
+
+  protected async onSubmit(): Promise<void> {
     if (this.form.invalid) {
       return;
     }
+
+    try {
+      const form = this.form.getRawValue();
+      const auth = await this.authService.register({
+        username: form.username,
+        email: form.email,
+        password: form.password,
+      });
+      console.log(auth);
+    } catch (e) {
+      if (e instanceof Error) this.errorMessage.set(e.message);
+    }
+  }
+
+  private passwordMatch(control: AbstractControl): ValidationErrors | null {
+    const password = control.parent?.get('password')?.value;
+    return control.value === password ? null : { mismatch: true };
   }
 }

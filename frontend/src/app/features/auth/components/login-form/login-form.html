@@ -20,7 +20,7 @@
         [errors]="messages.password"
         type="password"
         placeholder="••••••••"
-        autocomplete="password"
+        autocomplete="current-password"
         label="Senha"
       />
 
@@ -28,6 +28,10 @@
         <input type="checkbox" />
         <span class="text-sm text-fg-muted">Manter conectado neste computador</span>
       </label>
+
+      @if (errorMessage(); as text) {
+        <span class="text-sm text-center text-danger">{{ text }}</span>
+      }
 
       <app-auth-button [disabled]="buttonDisabled()" title="Entrar" />
 
