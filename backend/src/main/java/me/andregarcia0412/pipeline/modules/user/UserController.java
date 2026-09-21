@@ -26,24 +26,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-    @Operation(
-            summary = "Create a user",
-            description = "Registers a new user. The username and the email must both be free, and the password is stored hashed."
-    )
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "201",
-                    description = "User created",
-                    content = @Content(schema = @Schema(implementation = ReturnUserDto.class))
-            ),
-            @ApiResponse(responseCode = "400", description = "Invalid payload", content = @Content),
-            @ApiResponse(responseCode = "409", description = "Username or email already in use", content = @Content)
-    })
-    public ResponseEntity<ReturnUserDto> create(@RequestBody @Valid CreateUserDto createUserDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(createUserDto));
-    }
-
     @GetMapping("/{id}")
     @Operation(
             summary = "Find a user by id",

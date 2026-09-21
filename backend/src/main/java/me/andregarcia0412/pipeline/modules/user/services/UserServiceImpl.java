@@ -13,6 +13,7 @@ public class UserServiceImpl implements IUserService {
     private final CreateUserUseCase createUserUseCase;
     private final FindUserByIdUseCase findUserByIdUseCase;
     private final FindUserByEmailUseCase findUserByEmailUseCase;
+    private final FindUserByUsernameUseCase findUserByUsernameUseCase;
     private final UpdateUserByIdUseCase updateUserByIdUseCase;
     private final DeleteUserUseCase deleteUserUseCase;
 
@@ -20,19 +21,21 @@ public class UserServiceImpl implements IUserService {
             CreateUserUseCase createUserUseCase,
             FindUserByIdUseCase findUserByIdUseCase,
             FindUserByEmailUseCase findUserByEmailUseCase,
+            FindUserByUsernameUseCase findUserByUsernameUseCase,
             UpdateUserByIdUseCase updateUserByIdUseCase,
             DeleteUserUseCase deleteUserUseCase
     ) {
         this.createUserUseCase = createUserUseCase;
         this.findUserByIdUseCase = findUserByIdUseCase;
         this.findUserByEmailUseCase = findUserByEmailUseCase;
+        this.findUserByUsernameUseCase = findUserByUsernameUseCase;
         this.updateUserByIdUseCase = updateUserByIdUseCase;
         this.deleteUserUseCase = deleteUserUseCase;
     }
 
     @Override
-    public ReturnUserDto create(CreateUserDto createUserDto) {
-        return ReturnUserDto.fromEntity(createUserUseCase.execute(createUserDto));
+    public User create(CreateUserDto createUserDto) {
+        return createUserUseCase.execute(createUserDto);
     }
 
     @Override
@@ -43,6 +46,11 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User findByEmail(String email) {
         return findUserByEmailUseCase.execute(email);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return findUserByUsernameUseCase.execute(username);
     }
 
     @Override
