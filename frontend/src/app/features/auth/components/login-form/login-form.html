@@ -30,7 +30,8 @@
       </label>
 
       <button
-        class="cursor-pointer py-2 text-sm font-bold bg-accent/20 border border-status-playing text-accent-hover rounded-lg hover:bg-accent/30"
+        [disabled]="buttonDisabled()"
+        class="cursor-pointer py-2 text-sm font-bold bg-accent/20 border border-status-playing text-accent-hover rounded-lg hover:bg-accent/30 disabled:cursor-not-allowed disabled:hover:bg-accent/20 disabled:opacity-50"
       >
         Entrar
       </button>

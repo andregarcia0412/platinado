@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthInput } from '../auth-input/auth-input';
 import { AuthNavigation } from '../../utils/auth-navigation';
+import { hasEmptyField } from '../../utils/has-empty-field';
 
 @Component({
   imports: [ReactiveFormsModule, AuthInput],
@@ -13,12 +14,11 @@ export class ForgotPasswordForm {
   private readonly fb = inject(FormBuilder);
   protected readonly navigation = inject(AuthNavigation);
 
-  protected readonly form = this.fb.nonNullable.group(
-    {
-      email: ['', [Validators.required, Validators.email]],
-    },
-    { updateOn: 'blur' },
-  );
+  protected readonly form = this.fb.nonNullable.group({
+    email: ['', [Validators.required, Validators.email]],
+  });
+
+  protected readonly buttonDisabled = hasEmptyField(this.form);
 
   protected readonly messages = {
     email: { required: 'E-mail é obrigatório', email: 'E-mail inválido' },
