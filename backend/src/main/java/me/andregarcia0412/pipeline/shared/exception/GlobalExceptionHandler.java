@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,7 +28,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ConflictException.class)
     private ResponseEntity<ErrorMessage> conflictHandler(ConflictException exception) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorMessage(exception.getMessage(), HttpStatus.CONFLICT));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorMessage(exception.getMessage(), HttpStatus.CONFLICT, exception.getField()));
     }
 
     @ExceptionHandler(UnauthorizedException.class)
@@ -46,9 +47,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             @NonNull HttpHeaders headers,
             @NonNull HttpStatusCode status,
             @NonNull WebRequest request) {
+        FieldError fieldError = exception.getBindingResult().getFieldErrors().getFirst();
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage(
-                        exception.getBindingResult().getFieldErrors().getFirst().getDefaultMessage(),
-                        HttpStatus.BAD_REQUEST
+                        fieldError.getDefaultMessage(),
+                        HttpStatus.BAD_REQUEST,
+                        fieldError.getField()
                 )
         );
     }

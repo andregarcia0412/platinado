@@ -4,6 +4,10 @@ import org.springframework.http.HttpStatus;
 
 public record ErrorMessage(
         String message,
-        HttpStatus httpStatus
+        HttpStatus httpStatus,
+        String field
 ) {
+    public ErrorMessage(String message, HttpStatus httpStatus) {
+        this(message, httpStatus, null);
+    }
 }

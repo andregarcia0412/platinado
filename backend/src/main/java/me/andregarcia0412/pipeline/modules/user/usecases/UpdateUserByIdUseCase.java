@@ -26,14 +26,14 @@ public class UpdateUserByIdUseCase {
 
         if(updateUserDto.username() != null && !updateUserDto.username().equals(entity.getUsername())) {
             if(userRepository.existsByUsername(updateUserDto.username()))
-                throw new ConflictException("Username already in use");
+                throw new ConflictException("Username already in use", "username");
 
             entity.setUsername(updateUserDto.username());
         }
 
         if(updateUserDto.email() != null && !updateUserDto.email().equals(entity.getEmail())) {
             if(userRepository.existsByEmail(updateUserDto.email()))
-                throw new ConflictException("Email already in use");
+                throw new ConflictException("Email already in use", "email");
 
             entity.setEmail(updateUserDto.email());
         }
