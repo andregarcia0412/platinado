@@ -42,6 +42,17 @@ public class RedisCacheProviderImpl implements ICacheProvider {
     }
 
     @Override
+    public <T> boolean setIfAbsent(String key, T value, Duration ttl) {
+        try {
+            return Boolean.TRUE.equals(
+                    redis.opsForValue().setIfAbsent(key, mapper.writeValueAsString(value), ttl)
+            );
+        } catch (JacksonException exception) {
+            throw new CacheSerializationException(key ,exception);
+        }
+    }
+
+    @Override
     public void delete(String key) {
         redis.delete(key);
     }

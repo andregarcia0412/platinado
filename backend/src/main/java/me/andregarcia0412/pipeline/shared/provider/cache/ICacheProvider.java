@@ -6,5 +6,6 @@ import java.util.Optional;
 public interface ICacheProvider {
     <T> Optional<T> get(String key, Class<T> type);
     <T> void set(String key, T value, Duration ttl);
+    <T> boolean setIfAbsent(String key, T value, Duration ttl);
     void delete(String key);
 }
