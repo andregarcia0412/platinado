@@ -3,9 +3,10 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthInput } from '../auth-input/auth-input';
 import { AuthNavigation } from '../../utils/auth-navigation';
 import { hasEmptyField } from '../../utils/has-empty-field';
+import { AuthButton } from '../auth-button/auth-button';
 
 @Component({
-  imports: [ReactiveFormsModule, AuthInput],
+  imports: [ReactiveFormsModule, AuthInput, AuthButton],
   selector: 'app-login-form',
   templateUrl: './login-form.html',
   host: { class: 'flex-1 self-stretch' },

@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthNavigation } from '../../utils/auth-navigation';
 import { hasEmptyField } from '../../utils/has-empty-field';
+import { AuthButton } from '../auth-button/auth-button';
 import { AuthInput } from '../auth-input/auth-input';
 
 @Component({
-  imports: [ReactiveFormsModule, AuthInput],
+  imports: [ReactiveFormsModule, AuthInput, AuthButton],
   selector: 'app-register-form',
   templateUrl: './register-form.html',
   host: { class: 'flex-1 self-stretch' },
