@@ -23,7 +23,7 @@ public class Game {
     @Column(length = 255, nullable = false)
     private String slug;
 
-    @Column()
+    @Column(columnDefinition = "LONGTEXT")
     private String summary;
 
     @Column(name = "first_release_date")
@@ -32,8 +32,13 @@ public class Game {
     @Column(name = "cover_image_storage_key", length = 255)
     private String coverImageStorageKey;
 
-    @Column(name = "game_type_id", nullable = false)
-    private Integer gameTypeId;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(
+            name = "game_type_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_game_game_type1")
+    )
+    private GameType gameType;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -41,10 +46,10 @@ public class Game {
 
     protected Game() {}
 
-    public Game(String name, String slug, Integer gameTypeId) {
+    public Game(String name, String slug, GameType gameType) {
         this.name = name;
         this.slug = slug;
-        this.gameTypeId = gameTypeId;
+        this.gameType = gameType;
     }
 
     public Integer getId() {
@@ -71,8 +76,8 @@ public class Game {
         return coverImageStorageKey;
     }
 
-    public Integer getGameTypeId() {
-        return gameTypeId;
+    public GameType getGameType() {
+        return gameType;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -99,7 +104,7 @@ public class Game {
         this.coverImageStorageKey = coverImageStorageKey;
     }
 
-    public void setGameTypeId(Integer gameTypeId) {
-        this.gameTypeId = gameTypeId;
+    public void setGameType(GameType gameType) {
+        this.gameType = gameType;
     }
 }
