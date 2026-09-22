@@ -2,7 +2,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { API_BASE_URL, baseUrlInterceptor } from './core/api';
+import { API_BASE_URL, authInterceptor, baseUrlInterceptor } from './core/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -10,7 +10,7 @@ export const appConfig: ApplicationConfig = {
 
     { provide: API_BASE_URL, useValue: 'http://localhost:8080' },
 
-    provideHttpClient(withInterceptors([baseUrlInterceptor])),
+    provideHttpClient(withInterceptors([baseUrlInterceptor, authInterceptor])),
 
     provideRouter(routes),
   ],

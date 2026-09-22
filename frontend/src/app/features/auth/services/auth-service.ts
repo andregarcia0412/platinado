@@ -7,7 +7,7 @@ import {
   LoginRequestDto,
   RefreshRequestDto,
   RegisterRequestDto,
-} from '../../model/auth-dto';
+} from '../model/auth-dto';
 
 @Service()
 export class AuthService {
