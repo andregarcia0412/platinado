@@ -1,5 +1,12 @@
 package me.andregarcia0412.platinado.modules.game;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import me.andregarcia0412.platinado.modules.game.dtos.CreateGameDto;
@@ -14,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/game")
-@Tag(name = "Game")
+@Tag(name = "Game", description = "Game catalog management")
 public class GameController {
     private final IGameService gameService;
 
@@ -23,30 +30,92 @@ public class GameController {
     }
 
     @PostMapping
+    @Operation(
+            summary = "Create a game",
+            description = "Creates a new game linked to an existing game type. The slug must be unique."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Game created",
+                    content = @Content(schema = @Schema(implementation = ReturnGameDto.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Invalid payload", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Game type not found", content = @Content),
+            @ApiResponse(responseCode = "409", description = "A game with this slug already exists", content = @Content)
+    })
     public ResponseEntity<ReturnGameDto> create(@RequestBody @Valid CreateGameDto createGameDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(gameService.create(createGameDto));
     }
 
     @GetMapping
+    @Operation(
+            summary = "List all games",
+            description = "Returns every game in the catalog."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Games listed",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = ReturnGameDto.class)))
+            )
+    })
     public ResponseEntity<List<ReturnGameDto>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.findAll());
     }
 
     @GetMapping("/{slug}")
-    public ResponseEntity<ReturnGameDto> findBySlug(@PathVariable String slug) {
+    @Operation(
+            summary = "Find a game by slug",
+            description = "Returns the game matching the given slug."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Game found",
+                    content = @Content(schema = @Schema(implementation = ReturnGameDto.class))
+            ),
+            @ApiResponse(responseCode = "404", description = "Game not found", content = @Content)
+    })
+    public ResponseEntity<ReturnGameDto> findBySlug(
+            @Parameter(description = "Slug of the game", example = "the-legend-of-zelda") @PathVariable String slug
+    ) {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.findBySlug(slug));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ReturnGameDto> findById(
-            @PathVariable Integer id,
+    @Operation(
+            summary = "Update a game by id",
+            description = "Partially updates a game. Only the fields present in the payload are changed. Resending the current slug is a no-op rather than a conflict."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Game updated",
+                    content = @Content(schema = @Schema(implementation = ReturnGameDto.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Invalid payload", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Game or game type not found", content = @Content),
+            @ApiResponse(responseCode = "409", description = "A game with this slug already exists", content = @Content)
+    })
+    public ResponseEntity<ReturnGameDto> updateById(
+            @Parameter(description = "Id of the game", example = "1") @PathVariable Integer id,
             @RequestBody @Valid UpdateGameDto updateGameDto
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.updateById(id, updateGameDto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+    @Operation(
+            summary = "Delete a game by id",
+            description = "Deletes the game matching the given id. Returns no content on success."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Game deleted", content = @Content)
+    })
+    public ResponseEntity<Void> deleteById(
+            @Parameter(description = "Id of the game", example = "1") @PathVariable Integer id
+    ) {
         gameService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
