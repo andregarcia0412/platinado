@@ -52,6 +52,14 @@ public class Game {
         this.gameType = gameType;
     }
 
+    public Game(String name, String slug, String summary, LocalDateTime firstReleaseDate, GameType gameType) {
+        this.name = name;
+        this.slug = slug;
+        this.summary = summary;
+        this.firstReleaseDate = firstReleaseDate;
+        this.gameType = gameType;
+    }
+
     public Integer getId() {
         return id;
     }
