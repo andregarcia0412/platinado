@@ -16,11 +16,6 @@ public class GameTypeRepositoryImpl implements IGameTypeRepository {
     }
 
     @Override
-    public GameType save(GameType gameType) {
-        return gameTypeJpaRepository.save(gameType);
-    }
-
-    @Override
     public Optional<GameType> findById(Integer id) {
         return gameTypeJpaRepository.findById(id);
     }
@@ -33,10 +28,5 @@ public class GameTypeRepositoryImpl implements IGameTypeRepository {
     @Override
     public boolean existsByType(String type) {
         return gameTypeJpaRepository.existsByType(type);
-    }
-
-    @Override
-    public void deleteById(Integer id) {
-        gameTypeJpaRepository.deleteById(id);
     }
 }

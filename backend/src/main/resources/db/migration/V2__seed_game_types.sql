@@ -1,0 +1,16 @@
+INSERT INTO game_type (id, type) VALUES
+    (1, 'Main Game'),
+    (2, 'DLC'),
+    (3, 'Expansion'),
+    (4, 'Bundle'),
+    (5, 'Standalone Expansion'),
+    (6, 'Mod'),
+    (7, 'Episode'),
+    (8, 'Season'),
+    (9, 'Remake'),
+    (10, 'Remaster'),
+    (11, 'Expanded Game'),
+    (12, 'Port'),
+    (13, 'Fork'),
+    (14, 'Pack'),
+    (15, 'Update')
