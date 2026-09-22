@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.shared.provider.cache.exception;
+package me.andregarcia0412.platinado.shared.provider.cache.exception;
 
 public class CacheSerializationException extends RuntimeException {
     private final String key;

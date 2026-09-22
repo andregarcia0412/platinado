@@ -1,9 +1,9 @@
-package me.andregarcia0412.pipeline.shared.security;
+package me.andregarcia0412.platinado.shared.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import me.andregarcia0412.pipeline.shared.exception.dto.ErrorMessage;
+import me.andregarcia0412.platinado.shared.exception.dto.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

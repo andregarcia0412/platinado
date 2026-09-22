@@ -1,9 +1,9 @@
-package me.andregarcia0412.pipeline.modules.auth.interfaces;
+package me.andregarcia0412.platinado.modules.auth.interfaces;
 
-import me.andregarcia0412.pipeline.modules.auth.dtos.AuthResponseDto;
-import me.andregarcia0412.pipeline.modules.auth.dtos.LoginRequestDto;
-import me.andregarcia0412.pipeline.modules.auth.dtos.RefreshRequestDto;
-import me.andregarcia0412.pipeline.modules.auth.dtos.RegisterRequestDto;
+import me.andregarcia0412.platinado.modules.auth.dtos.AuthResponseDto;
+import me.andregarcia0412.platinado.modules.auth.dtos.LoginRequestDto;
+import me.andregarcia0412.platinado.modules.auth.dtos.RefreshRequestDto;
+import me.andregarcia0412.platinado.modules.auth.dtos.RegisterRequestDto;
 
 public interface IAuthService {
     AuthResponseDto login(LoginRequestDto loginRequestDto);

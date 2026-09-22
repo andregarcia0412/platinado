@@ -1,12 +1,12 @@
-package me.andregarcia0412.pipeline.shared.security.provider;
+package me.andregarcia0412.platinado.shared.security.provider;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import me.andregarcia0412.pipeline.shared.security.UserPrincipal;
-import me.andregarcia0412.pipeline.shared.security.exception.JWTGenerationException;
+import me.andregarcia0412.platinado.shared.security.UserPrincipal;
+import me.andregarcia0412.platinado.shared.security.exception.JWTGenerationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

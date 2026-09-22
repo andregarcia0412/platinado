@@ -1,6 +1,6 @@
-package me.andregarcia0412.pipeline.shared.security.provider;
+package me.andregarcia0412.platinado.shared.security.provider;
 
-import me.andregarcia0412.pipeline.shared.security.UserPrincipal;
+import me.andregarcia0412.platinado.shared.security.UserPrincipal;
 
 import java.util.Optional;
 

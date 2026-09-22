@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.shared.provider.cache;
+package me.andregarcia0412.platinado.shared.provider.cache;
 
 import java.time.Duration;
 import java.util.Optional;

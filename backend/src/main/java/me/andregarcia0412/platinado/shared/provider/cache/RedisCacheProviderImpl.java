@@ -1,6 +1,6 @@
-package me.andregarcia0412.pipeline.shared.provider.cache;
+package me.andregarcia0412.platinado.shared.provider.cache;
 
-import me.andregarcia0412.pipeline.shared.provider.cache.exception.CacheSerializationException;
+import me.andregarcia0412.platinado.shared.provider.cache.exception.CacheSerializationException;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import tools.jackson.core.JacksonException;

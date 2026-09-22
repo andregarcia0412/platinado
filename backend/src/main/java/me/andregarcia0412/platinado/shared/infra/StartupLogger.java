@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.shared.infra;
+package me.andregarcia0412.platinado.shared.infra;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

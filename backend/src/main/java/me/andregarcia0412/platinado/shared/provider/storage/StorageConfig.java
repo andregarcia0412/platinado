@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.shared.provider.storage;
+package me.andregarcia0412.platinado.shared.provider.storage;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

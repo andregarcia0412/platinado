@@ -1,7 +1,7 @@
-package me.andregarcia0412.pipeline.modules.game.repositories;
+package me.andregarcia0412.platinado.modules.game.repositories;
 
-import me.andregarcia0412.pipeline.modules.game.entities.GameType;
-import me.andregarcia0412.pipeline.modules.game.interfaces.IGameTypeRepository;
+import me.andregarcia0412.platinado.modules.game.entities.GameType;
+import me.andregarcia0412.platinado.modules.game.interfaces.IGameTypeRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

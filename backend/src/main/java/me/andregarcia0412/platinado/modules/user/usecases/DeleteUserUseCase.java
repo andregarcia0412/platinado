@@ -1,7 +1,7 @@
-package me.andregarcia0412.pipeline.modules.user.usecases;
+package me.andregarcia0412.platinado.modules.user.usecases;
 
-import me.andregarcia0412.pipeline.modules.user.interfaces.IUserRepository;
-import me.andregarcia0412.pipeline.shared.exception.exceptions.NotFoundException;
+import me.andregarcia0412.platinado.modules.user.interfaces.IUserRepository;
+import me.andregarcia0412.platinado.shared.exception.exceptions.NotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component

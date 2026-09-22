@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.modules.auth.dtos;
+package me.andregarcia0412.platinado.modules.auth.dtos;
 
 public record AuthResponseDto(
         String accessToken,

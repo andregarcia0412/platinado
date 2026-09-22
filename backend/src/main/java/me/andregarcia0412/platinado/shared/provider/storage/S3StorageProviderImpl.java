@@ -1,7 +1,7 @@
-package me.andregarcia0412.pipeline.shared.provider.storage;
+package me.andregarcia0412.platinado.shared.provider.storage;
 
 import jakarta.annotation.PostConstruct;
-import me.andregarcia0412.pipeline.shared.provider.storage.exception.StorageException;
+import me.andregarcia0412.platinado.shared.provider.storage.exception.StorageException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

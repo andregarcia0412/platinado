@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.modules.auth;
+package me.andregarcia0412.platinado.modules.auth;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -8,11 +8,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import me.andregarcia0412.pipeline.modules.auth.dtos.AuthResponseDto;
-import me.andregarcia0412.pipeline.modules.auth.dtos.LoginRequestDto;
-import me.andregarcia0412.pipeline.modules.auth.dtos.RefreshRequestDto;
-import me.andregarcia0412.pipeline.modules.auth.dtos.RegisterRequestDto;
-import me.andregarcia0412.pipeline.modules.auth.interfaces.IAuthService;
+import me.andregarcia0412.platinado.modules.auth.dtos.AuthResponseDto;
+import me.andregarcia0412.platinado.modules.auth.dtos.LoginRequestDto;
+import me.andregarcia0412.platinado.modules.auth.dtos.RefreshRequestDto;
+import me.andregarcia0412.platinado.modules.auth.dtos.RegisterRequestDto;
+import me.andregarcia0412.platinado.modules.auth.interfaces.IAuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.shared.security.provider;
+package me.andregarcia0412.platinado.shared.security.provider;
 
 import java.time.Instant;
 

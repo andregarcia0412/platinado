@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.shared.exception.dto;
+package me.andregarcia0412.platinado.shared.exception.dto;
 
 import org.springframework.http.HttpStatus;
 

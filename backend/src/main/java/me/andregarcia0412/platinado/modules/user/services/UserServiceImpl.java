@@ -1,11 +1,11 @@
-package me.andregarcia0412.pipeline.modules.user.services;
+package me.andregarcia0412.platinado.modules.user.services;
 
-import me.andregarcia0412.pipeline.modules.user.dtos.CreateUserDto;
-import me.andregarcia0412.pipeline.modules.user.dtos.ReturnUserDto;
-import me.andregarcia0412.pipeline.modules.user.dtos.UpdateUserDto;
-import me.andregarcia0412.pipeline.modules.user.entities.User;
-import me.andregarcia0412.pipeline.modules.user.interfaces.IUserService;
-import me.andregarcia0412.pipeline.modules.user.usecases.*;
+import me.andregarcia0412.platinado.modules.user.dtos.CreateUserDto;
+import me.andregarcia0412.platinado.modules.user.dtos.ReturnUserDto;
+import me.andregarcia0412.platinado.modules.user.dtos.UpdateUserDto;
+import me.andregarcia0412.platinado.modules.user.entities.User;
+import me.andregarcia0412.platinado.modules.user.interfaces.IUserService;
+import me.andregarcia0412.platinado.modules.user.usecases.*;
 import org.springframework.stereotype.Service;
 
 @Service

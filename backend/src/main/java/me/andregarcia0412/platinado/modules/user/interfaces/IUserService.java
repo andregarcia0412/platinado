@@ -1,9 +1,9 @@
-package me.andregarcia0412.pipeline.modules.user.interfaces;
+package me.andregarcia0412.platinado.modules.user.interfaces;
 
-import me.andregarcia0412.pipeline.modules.user.dtos.CreateUserDto;
-import me.andregarcia0412.pipeline.modules.user.dtos.ReturnUserDto;
-import me.andregarcia0412.pipeline.modules.user.dtos.UpdateUserDto;
-import me.andregarcia0412.pipeline.modules.user.entities.User;
+import me.andregarcia0412.platinado.modules.user.dtos.CreateUserDto;
+import me.andregarcia0412.platinado.modules.user.dtos.ReturnUserDto;
+import me.andregarcia0412.platinado.modules.user.dtos.UpdateUserDto;
+import me.andregarcia0412.platinado.modules.user.entities.User;
 
 public interface IUserService {
     User create(CreateUserDto createUserDto);

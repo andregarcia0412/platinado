@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.modules.game.entities;
+package me.andregarcia0412.platinado.modules.game.entities;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;

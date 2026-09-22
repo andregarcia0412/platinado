@@ -1,6 +1,6 @@
-package me.andregarcia0412.pipeline.modules.user.interfaces;
+package me.andregarcia0412.platinado.modules.user.interfaces;
 
-import me.andregarcia0412.pipeline.modules.user.entities.User;
+import me.andregarcia0412.platinado.modules.user.entities.User;
 
 import java.util.Optional;
 

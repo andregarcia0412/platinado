@@ -1,10 +1,10 @@
-package me.andregarcia0412.pipeline.shared.exception;
+package me.andregarcia0412.platinado.shared.exception;
 
-import me.andregarcia0412.pipeline.shared.exception.dto.ErrorMessage;
-import me.andregarcia0412.pipeline.shared.exception.exceptions.BadRequestException;
-import me.andregarcia0412.pipeline.shared.exception.exceptions.ConflictException;
-import me.andregarcia0412.pipeline.shared.exception.exceptions.NotFoundException;
-import me.andregarcia0412.pipeline.shared.exception.exceptions.UnauthorizedException;
+import me.andregarcia0412.platinado.shared.exception.dto.ErrorMessage;
+import me.andregarcia0412.platinado.shared.exception.exceptions.BadRequestException;
+import me.andregarcia0412.platinado.shared.exception.exceptions.ConflictException;
+import me.andregarcia0412.platinado.shared.exception.exceptions.NotFoundException;
+import me.andregarcia0412.platinado.shared.exception.exceptions.UnauthorizedException;
 import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

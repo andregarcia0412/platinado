@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.modules.game.dtos;
+package me.andregarcia0412.platinado.modules.game.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

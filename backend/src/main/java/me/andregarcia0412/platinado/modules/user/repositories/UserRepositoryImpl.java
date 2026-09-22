@@ -1,7 +1,7 @@
-package me.andregarcia0412.pipeline.modules.user.repositories;
+package me.andregarcia0412.platinado.modules.user.repositories;
 
-import me.andregarcia0412.pipeline.modules.user.entities.User;
-import me.andregarcia0412.pipeline.modules.user.interfaces.IUserRepository;
+import me.andregarcia0412.platinado.modules.user.entities.User;
+import me.andregarcia0412.platinado.modules.user.interfaces.IUserRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

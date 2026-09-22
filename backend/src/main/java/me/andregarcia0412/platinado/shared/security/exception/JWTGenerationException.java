@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.shared.security.exception;
+package me.andregarcia0412.platinado.shared.security.exception;
 
 public class JWTGenerationException extends RuntimeException {
     public JWTGenerationException(String message, Throwable cause) {

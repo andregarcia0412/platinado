@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.shared.config;
+package me.andregarcia0412.platinado.shared.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

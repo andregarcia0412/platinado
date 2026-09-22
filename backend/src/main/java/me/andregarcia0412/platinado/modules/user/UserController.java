@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.modules.user;
+package me.andregarcia0412.platinado.modules.user;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -8,10 +8,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import me.andregarcia0412.pipeline.modules.user.dtos.CreateUserDto;
-import me.andregarcia0412.pipeline.modules.user.dtos.ReturnUserDto;
-import me.andregarcia0412.pipeline.modules.user.dtos.UpdateUserDto;
-import me.andregarcia0412.pipeline.modules.user.interfaces.IUserService;
+import me.andregarcia0412.platinado.modules.user.dtos.CreateUserDto;
+import me.andregarcia0412.platinado.modules.user.dtos.ReturnUserDto;
+import me.andregarcia0412.platinado.modules.user.dtos.UpdateUserDto;
+import me.andregarcia0412.platinado.modules.user.interfaces.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

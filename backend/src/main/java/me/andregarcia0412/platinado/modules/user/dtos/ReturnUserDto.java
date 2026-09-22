@@ -1,6 +1,6 @@
-package me.andregarcia0412.pipeline.modules.user.dtos;
+package me.andregarcia0412.platinado.modules.user.dtos;
 
-import me.andregarcia0412.pipeline.modules.user.entities.User;
+import me.andregarcia0412.platinado.modules.user.entities.User;
 
 import java.time.LocalDateTime;
 

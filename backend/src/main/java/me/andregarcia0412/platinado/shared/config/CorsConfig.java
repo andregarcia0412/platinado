@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.shared.config;
+package me.andregarcia0412.platinado.shared.config;
 
 import java.util.List;
 

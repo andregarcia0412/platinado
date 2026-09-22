@@ -1,9 +1,9 @@
-package me.andregarcia0412.pipeline.modules.user.usecases;
+package me.andregarcia0412.platinado.modules.user.usecases;
 
-import me.andregarcia0412.pipeline.modules.user.dtos.CreateUserDto;
-import me.andregarcia0412.pipeline.modules.user.entities.User;
-import me.andregarcia0412.pipeline.modules.user.interfaces.IUserRepository;
-import me.andregarcia0412.pipeline.shared.exception.exceptions.ConflictException;
+import me.andregarcia0412.platinado.modules.user.dtos.CreateUserDto;
+import me.andregarcia0412.platinado.modules.user.entities.User;
+import me.andregarcia0412.platinado.modules.user.interfaces.IUserRepository;
+import me.andregarcia0412.platinado.shared.exception.exceptions.ConflictException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 

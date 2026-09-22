@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline;
+package me.andregarcia0412.platinado;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

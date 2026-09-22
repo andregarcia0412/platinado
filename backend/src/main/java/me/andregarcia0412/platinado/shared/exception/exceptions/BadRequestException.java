@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.shared.exception.exceptions;
+package me.andregarcia0412.platinado.shared.exception.exceptions;
 
 public class BadRequestException extends RuntimeException {
     public BadRequestException(String message) {

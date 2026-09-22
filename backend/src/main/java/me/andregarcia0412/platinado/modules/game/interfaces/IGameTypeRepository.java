@@ -1,6 +1,6 @@
-package me.andregarcia0412.pipeline.modules.game.interfaces;
+package me.andregarcia0412.platinado.modules.game.interfaces;
 
-import me.andregarcia0412.pipeline.modules.game.entities.GameType;
+import me.andregarcia0412.platinado.modules.game.entities.GameType;
 
 import java.util.List;
 import java.util.Optional;

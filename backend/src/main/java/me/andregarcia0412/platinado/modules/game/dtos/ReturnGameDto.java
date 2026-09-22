@@ -1,4 +1,4 @@
-package me.andregarcia0412.pipeline.modules.game.dtos;
+package me.andregarcia0412.platinado.modules.game.dtos;
 
 public record ReturnGameDto() {
 }
