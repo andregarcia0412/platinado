@@ -27,6 +27,7 @@ export class LoginForm {
   });
 
   protected readonly buttonDisabled = hasEmptyField(this.form);
+  protected readonly buttonLoading = signal<boolean>(false);
 
   protected readonly messages = {
     username: {
@@ -45,10 +46,13 @@ export class LoginForm {
     }
 
     try {
+      this.buttonLoading.set(true);
       const auth = await this.userService.login(this.form.getRawValue());
       console.log(auth);
     } catch (e) {
       if (e instanceof Error) this.errorMessage.set(e.message);
+    } finally {
+      this.buttonLoading.set(false);
     }
   }
 }

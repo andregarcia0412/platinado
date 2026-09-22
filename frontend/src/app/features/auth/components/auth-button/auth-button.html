@@ -2,5 +2,11 @@
   [disabled]="disabled()"
   class="cursor-pointer py-2 text-sm font-bold bg-accent/20 border border-status-playing text-accent-hover rounded-lg hover:bg-accent/30 disabled:cursor-not-allowed disabled:hover:bg-accent/20 disabled:opacity-50 w-full"
 >
-  {{ title() }}
+  @if (loading()) {
+    <div class="flex items-center justify-center">
+      <img src="/icons/ring-resize.svg" class="self-center" width="24" height="24" />
+    </div>
+  } @else {
+    {{ title() }}
+  }
 </button>

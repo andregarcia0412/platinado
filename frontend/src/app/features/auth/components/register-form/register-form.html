@@ -45,7 +45,11 @@
         <span class="text-sm text-center text-danger">{{ text }}</span>
       }
 
-      <app-auth-button [disabled]="buttonDisabled()" title="Criar conta" />
+      <app-auth-button
+        [disabled]="buttonDisabled()"
+        title="Criar conta"
+        [loading]="buttonLoading()"
+      />
 
       <div class="h-px w-full bg-line"></div>
 

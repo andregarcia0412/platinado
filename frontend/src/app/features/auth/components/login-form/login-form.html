@@ -33,7 +33,7 @@
         <span class="text-sm text-center text-danger">{{ text }}</span>
       }
 
-      <app-auth-button [disabled]="buttonDisabled()" title="Entrar" />
+      <app-auth-button [disabled]="buttonDisabled()" title="Entrar" [loading]="buttonLoading()" />
 
       <a
         (click)="navigation.goTo('forgot-password')"

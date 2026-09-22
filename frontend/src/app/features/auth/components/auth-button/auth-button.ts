@@ -8,4 +8,5 @@ import { Component, input } from '@angular/core';
 export class AuthButton {
   readonly disabled = input<boolean>(false);
   readonly title = input.required<string>();
+  readonly loading = input<boolean>(false);
 }

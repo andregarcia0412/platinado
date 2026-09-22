@@ -35,6 +35,7 @@ export class RegisterForm {
   });
 
   protected readonly buttonDisabled = hasEmptyField(this.form);
+  protected readonly buttonLoading = signal<boolean>(false);
 
   protected readonly messages = {
     username: {
@@ -61,6 +62,7 @@ export class RegisterForm {
     }
 
     try {
+      this.buttonLoading.set(true);
       const form = this.form.getRawValue();
       const auth = await this.authService.register({
         username: form.username,
@@ -70,6 +72,8 @@ export class RegisterForm {
       console.log(auth);
     } catch (e) {
       if (e instanceof Error) this.errorMessage.set(e.message);
+    } finally {
+      this.buttonLoading.set(false);
     }
   }
 
