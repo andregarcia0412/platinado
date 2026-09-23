@@ -6,7 +6,12 @@ import me.andregarcia0412.platinado.modules.user.dtos.UpdateUserDto;
 import me.andregarcia0412.platinado.modules.user.entities.User;
 import me.andregarcia0412.platinado.modules.user.interfaces.IUserService;
 import me.andregarcia0412.platinado.modules.user.usecases.*;
+import me.andregarcia0412.platinado.shared.observer.IUserObserver;
+import me.andregarcia0412.platinado.shared.observer.LogUserObserver;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -16,6 +21,7 @@ public class UserServiceImpl implements IUserService {
     private final FindUserByUsernameUseCase findUserByUsernameUseCase;
     private final UpdateUserByIdUseCase updateUserByIdUseCase;
     private final DeleteUserUseCase deleteUserUseCase;
+    private final List<IUserObserver> userObservers = new ArrayList<IUserObserver>();
 
     public UserServiceImpl(
             CreateUserUseCase createUserUseCase,
@@ -31,11 +37,17 @@ public class UserServiceImpl implements IUserService {
         this.findUserByUsernameUseCase = findUserByUsernameUseCase;
         this.updateUserByIdUseCase = updateUserByIdUseCase;
         this.deleteUserUseCase = deleteUserUseCase;
+        this.userObservers.add(new LogUserObserver());
     }
 
     @Override
     public User create(CreateUserDto createUserDto) {
-        return createUserUseCase.execute(createUserDto);
+        User user = createUserUseCase.execute(createUserDto);
+        for(IUserObserver observer : userObservers) {
+            observer.onUserCreated(user);
+        }
+
+        return user;
     }
 
     @Override
@@ -55,11 +67,18 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ReturnUserDto updateById(Integer id, UpdateUserDto updateUserDto) {
-        return ReturnUserDto.fromEntity(updateUserByIdUseCase.execute(id, updateUserDto));
+        User user = updateUserByIdUseCase.execute(id, updateUserDto);
+        for(IUserObserver observer : userObservers) {
+            observer.onUserUpdated(user);
+        }
+        return ReturnUserDto.fromEntity(user);
     }
 
     @Override
     public void deleteById(Integer id) {
         deleteUserUseCase.execute(id);
+        for(IUserObserver observer : userObservers) {
+            observer.onUserDeleted(id);
+        }
     }
 }
