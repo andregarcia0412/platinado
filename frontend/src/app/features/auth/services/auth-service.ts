@@ -12,14 +12,17 @@ import {
 @Service()
 export class AuthService {
   private readonly http = inject(HttpClient);
+  private isLoggedIn = false;
 
   async register(dto: RegisterRequestDto): Promise<AuthResponseDto> {
+    this.isLoggedIn = true;
     return await firstValueFrom(this.http.post<AuthResponseDto>('/auth/register', dto)).catch(
       translateHttpError,
     );
   }
 
   async login(dto: LoginRequestDto): Promise<AuthResponseDto> {
+    this.isLoggedIn = true;
     return await firstValueFrom(this.http.post<AuthResponseDto>('/auth/login', dto)).catch(
       translateHttpError,
     );
@@ -32,6 +35,11 @@ export class AuthService {
   }
 
   async logout(dto: RefreshRequestDto): Promise<void> {
+    this.isLoggedIn = false;
     return await firstValueFrom(this.http.post<void>('auth/logout', dto)).catch(translateHttpError);
+  }
+
+  isAuthenticated(): boolean {
+    return this.isLoggedIn;
   }
 }

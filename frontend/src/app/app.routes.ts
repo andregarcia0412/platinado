@@ -1,14 +1,18 @@
 import { Routes } from '@angular/router';
+import { Auth } from './features/auth/auth';
+import { authGuard } from './features/auth/guards/auth.guard';
+import { MyGames } from './features/my-games/my-games';
 
 export const routes: Routes = [
   {
     path: 'auth',
-    loadComponent: () => import('./features/auth/auth').then((m) => m.Auth),
+    component: Auth,
     title: 'Auth',
   },
   {
     path: 'my-games',
-    loadComponent: () => import('./features/my-games/my-games').then((m) => m.MyGames),
+    component: MyGames,
     title: 'My Games',
+    canActivate: [authGuard],
   },
 ];
