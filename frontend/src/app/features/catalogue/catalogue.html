@@ -1,7 +1,9 @@
-<section class="bg-bg min-h-screen">
+<section class="flex flex-col bg-bg min-h-screen gap-4">
   <app-header />
 
-  <div class="scrollbar-hover flex items-center justify-center-safe gap-2 overflow-x-auto pb-2">
+  <div
+    class="scrollbar-hover flex items-center justify-center-safe gap-2 overflow-x-auto pb-2 px-4"
+  >
     @for (filter of filters; track $index) {
       <app-game-type-pill
         [text]="filter"

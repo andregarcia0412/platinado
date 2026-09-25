@@ -20,5 +20,6 @@ export const routes: Routes = [
     path: 'catalogue',
     component: Catalogue,
     title: 'Catalogue',
+    canActivate: [authGuard],
   },
 ];
