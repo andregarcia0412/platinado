@@ -11,18 +11,18 @@ public record ReturnGameDto(
         String slug,
         String summary,
         LocalDateTime firstReleaseDate,
-        String coverImageKey,
+        String coverUrl,
         GameType gameType,
         LocalDateTime createdAt
 ) {
-    public static ReturnGameDto fromEntity(Game game) {
+    public static ReturnGameDto fromEntity(Game game, String coverUrl) {
         return new ReturnGameDto(
                 game.getId(),
                 game.getName(),
                 game.getSlug(),
                 game.getSummary(),
                 game.getFirstReleaseDate(),
-                game.getCoverImageStorageKey(),
+                coverUrl,
                 game.getGameType(),
                 game.getCreatedAt()
         );

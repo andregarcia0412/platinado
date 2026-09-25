@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import me.andregarcia0412.platinado.modules.game.dtos.CreateGameDto;
+import me.andregarcia0412.platinado.modules.game.dtos.ReturnGameCoverDto;
 import me.andregarcia0412.platinado.modules.game.dtos.ReturnGameDto;
 import me.andregarcia0412.platinado.modules.game.dtos.UpdateGameDto;
 import me.andregarcia0412.platinado.modules.game.interfaces.IGameService;
@@ -19,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -149,22 +149,19 @@ public class GameController {
     @GetMapping("/{id}/cover")
     @Operation(
             summary = "Get a game cover image",
-            description = "Redirects to a presigned URL of the game's cover image in the bucket. The URL is valid for 15 minutes."
+            description = "Returns a presigned URL of the game's cover image in the bucket. The URL is valid for 15 minutes."
     )
     @ApiResponses({
             @ApiResponse(
-                    responseCode = "307",
-                    description = "Redirect to the cover image presigned URL (see the Location header)",
-                    content = @Content
+                    responseCode = "200",
+                    description = "Cover image presigned URL returned",
+                    content = @Content(schema = @Schema(implementation = ReturnGameCoverDto.class))
             ),
-            @ApiResponse(responseCode = "404", description = "Game not found", content = @Content)
+            @ApiResponse(responseCode = "404", description = "Game or cover not found", content = @Content)
     })
-    public ResponseEntity<Void> getGameCover(
+    public ResponseEntity<ReturnGameCoverDto> getGameCover(
             @Parameter(description = "Id of the game", example = "1") @PathVariable Integer id
     ) {
-        return ResponseEntity
-                .status(HttpStatus.TEMPORARY_REDIRECT)
-                .location(URI.create(gameService.getCoverImage(id)))
-                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(new ReturnGameCoverDto(gameService.getCoverImage(id)));
     }
 }
