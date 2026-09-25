@@ -54,7 +54,7 @@ export class LoginForm {
       const { accessToken, refreshToken } = await this.authService.login(this.form.getRawValue());
       this.tokenService.setAccessToken(accessToken);
       this.tokenService.setRefreshToken(refreshToken);
-      this.router.navigate(['/home']);
+      this.router.navigate(['/my-games']);
     } catch (e) {
       if (e instanceof Error) this.errorMessage.set(e.message);
     } finally {

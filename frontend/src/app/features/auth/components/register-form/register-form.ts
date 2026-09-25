@@ -75,7 +75,7 @@ export class RegisterForm {
       });
       this.tokenService.setAccessToken(accessToken);
       this.tokenService.setRefreshToken(refreshToken);
-      this.router.navigate(['/home']);
+      this.router.navigate(['/my-games']);
     } catch (e) {
       if (e instanceof Error) this.errorMessage.set(e.message);
     } finally {

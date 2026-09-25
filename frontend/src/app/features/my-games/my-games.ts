@@ -3,7 +3,7 @@ import { OutlinedButton } from '../../shared/components/outlined-button/outlined
 
 @Component({
   imports: [OutlinedButton],
-  selector: 'app-home',
-  templateUrl: './home.html',
+  selector: 'app-my-games',
+  templateUrl: './my-games.html',
 })
-export class Home {}
+export class MyGames {}

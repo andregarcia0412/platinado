@@ -7,8 +7,8 @@ export const routes: Routes = [
     title: 'Auth',
   },
   {
-    path: 'home',
-    loadComponent: () => import('./features/home/home').then((m) => m.Home),
-    title: 'Home',
+    path: 'my-games',
+    loadComponent: () => import('./features/my-games/my-games').then((m) => m.MyGames),
+    title: 'My Games',
   },
 ];
