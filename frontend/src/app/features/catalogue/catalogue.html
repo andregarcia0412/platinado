@@ -16,7 +16,7 @@
   @if (error()) {
   } @else if (isLoading()) {
     <div class="grid grid-cols-[repeat(auto-fill,9.375rem)] justify-center gap-x-4 gap-y-6">
-      @for (i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]; track i) {
+      @for (_ of 20 | range; track $index) {
         <app-game-card-skeleton />
       }
     </div>

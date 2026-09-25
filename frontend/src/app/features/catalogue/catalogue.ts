@@ -9,9 +9,10 @@ import { GameService } from './services/game-service';
 import { translateGameType } from './utils/translateGameType';
 import { TranslateGameTypePipe } from './pipes/translate-game-type-pipe';
 import { GameCardSkeleton } from '../../shared/components/game-card-skeleton/game-card-skeleton';
+import { RangePipe } from '../../shared/pipes/range-pipe';
 
 @Component({
-  imports: [GameTypePill, Header, GameCard, ParseYearPipe, TranslateGameTypePipe, GameCardSkeleton],
+  imports: [GameTypePill, Header, GameCard, ParseYearPipe, TranslateGameTypePipe, GameCardSkeleton, RangePipe],
   selector: 'app-catalogue',
   templateUrl: './catalogue.html',
 })
