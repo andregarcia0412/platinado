@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { GameTypePill } from './components/game-type-pill/game-type-pill';
+import { GameTypeFilterEnum } from './enum/game-type-filter.enum';
 
 @Component({
   imports: [GameTypePill],
@@ -7,7 +8,11 @@ import { GameTypePill } from './components/game-type-pill/game-type-pill';
   templateUrl: './catalogue.html',
 })
 export class Catalogue {
-  filterBy(type: string) {
+  protected readonly filters = Object.values(GameTypeFilterEnum);
+  protected readonly selectedFilter = signal<GameTypeFilterEnum>(GameTypeFilterEnum.ALL);
+
+  filterBy(type: GameTypeFilterEnum) {
+    this.selectedFilter.set(type);
     console.log(type);
   }
 }

@@ -1,1 +1,9 @@
-<app-game-type-pill text="Todos" (pillClick)="filterBy('Todos')" />
+<div class="scrollbar-hover flex items-center gap-2 overflow-x-auto pb-2">
+  @for (filter of filters; track $index) {
+    <app-game-type-pill
+      [text]="filter"
+      (pillClick)="filterBy(filter)"
+      [selected]="selectedFilter() === filter"
+    />
+  }
+</div>

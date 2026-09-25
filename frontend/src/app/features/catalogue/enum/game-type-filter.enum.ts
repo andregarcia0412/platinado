@@ -1,0 +1,18 @@
+export enum GameTypeFilterEnum {
+  ALL = 'Todos',
+  MAIN_GAME = 'Jogo Principal',
+  DLC = 'DLC',
+  EXPANSION = 'Expansão',
+  BUNDLE = 'Pacote',
+  STANDALONE_EXPANSION = 'Expansão Independente',
+  MOD = 'Mod',
+  EPISODE = 'Episódio',
+  SEASON = 'Temporada',
+  REMAKE = 'Remake',
+  REMASTER = 'Remasterização',
+  EXPANDED_GAME = 'Jogo Expandido',
+  PORT = 'Port',
+  FORK = 'Fork',
+  PACK = 'Pack',
+  UPDATE = 'Atualização',
+}
