@@ -1,9 +1,13 @@
-<div class="scrollbar-hover flex items-center gap-2 overflow-x-auto pb-2">
-  @for (filter of filters; track $index) {
-    <app-game-type-pill
-      [text]="filter"
-      (pillClick)="filterBy(filter)"
-      [selected]="selectedFilter() === filter"
-    />
-  }
-</div>
+<section class="bg-bg min-h-screen">
+  <app-header />
+
+  <div class="scrollbar-hover flex items-center justify-center-safe gap-2 overflow-x-auto pb-2">
+    @for (filter of filters; track $index) {
+      <app-game-type-pill
+        [text]="filter"
+        (pillClick)="filterBy(filter)"
+        [selected]="selectedFilter() === filter"
+      />
+    }
+  </div>
+</section>

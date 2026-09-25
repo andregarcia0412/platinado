@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { GameTypePill } from './components/game-type-pill/game-type-pill';
 import { GameTypeFilterEnum } from './enum/game-type-filter.enum';
+import { Header } from '../../shared/components/header/header';
 
 @Component({
-  imports: [GameTypePill],
+  imports: [GameTypePill, Header],
   selector: 'app-catalogue',
   templateUrl: './catalogue.html',
 })
