@@ -12,4 +12,10 @@
       />
     }
   </div>
+
+  <div class="grid grid-cols-[repeat(auto-fill,9.375rem)] justify-center gap-x-4 gap-y-6">
+    @for (i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; track $index) {
+      <app-game-card gameType="Main Game" name="Alan Wake 2" releaseYear="2023" />
+    }
+  </div>
 </section>
