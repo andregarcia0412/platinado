@@ -7,7 +7,7 @@ import { Component, input } from '@angular/core';
 })
 export class GameCard {
   readonly name = input.required<string>();
-  readonly releaseYear = input.required<string>();
+  readonly releaseYear = input<string>();
   readonly gameType = input.required<string>();
   readonly cover = input<string>();
 }
