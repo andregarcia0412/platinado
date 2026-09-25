@@ -15,4 +15,5 @@ public interface IGameService {
     ReturnGameDto updateById(Integer id, UpdateGameDto updateGameDto);
     void deleteById(Integer id);
     ReturnGameDto createCoverImage(Integer id, MultipartFile file);
+    String getCoverImage(Integer id);
 }

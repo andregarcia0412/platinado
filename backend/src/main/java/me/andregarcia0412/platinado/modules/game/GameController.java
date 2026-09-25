@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -143,5 +144,27 @@ public class GameController {
             @Parameter(description = "Cover image file (JPEG, PNG or WEBP, max 5MB)") @RequestPart("file") MultipartFile file
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.createCoverImage(id, file));
+    }
+
+    @GetMapping("/{id}/cover")
+    @Operation(
+            summary = "Get a game cover image",
+            description = "Redirects to a presigned URL of the game's cover image in the bucket. The URL is valid for 15 minutes."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "307",
+                    description = "Redirect to the cover image presigned URL (see the Location header)",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Game not found", content = @Content)
+    })
+    public ResponseEntity<Void> getGameCover(
+            @Parameter(description = "Id of the game", example = "1") @PathVariable Integer id
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.TEMPORARY_REDIRECT)
+                .location(URI.create(gameService.getCoverImage(id)))
+                .build();
     }
 }

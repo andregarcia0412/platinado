@@ -19,6 +19,7 @@ public class GameServiceImpl implements IGameService {
     private final UpdateGameByIdUseCase updateGameByIdUseCase;
     private final DeleteGameByIdUseCase deleteGameByIdUseCase;
     private final CreateCoverImageUseCase createCoverImageUseCase;
+    private final GetGameCoverUseCase getGameCoverUseCase;
 
     public GameServiceImpl(
             CreateGameUseCase createGameUseCase,
@@ -27,7 +28,8 @@ public class GameServiceImpl implements IGameService {
             FindGameBySlugUseCase findGameBySlugUseCase,
             UpdateGameByIdUseCase updateGameByIdUseCase,
             DeleteGameByIdUseCase deleteGameByIdUseCase,
-            CreateCoverImageUseCase createCoverImageUseCase
+            CreateCoverImageUseCase createCoverImageUseCase,
+            GetGameCoverUseCase getGameCoverUseCase
     ) {
         this.createGameUseCase = createGameUseCase;
         this.findAllGamesUseCase = findAllGamesUseCase;
@@ -36,6 +38,7 @@ public class GameServiceImpl implements IGameService {
         this.updateGameByIdUseCase = updateGameByIdUseCase;
         this.deleteGameByIdUseCase = deleteGameByIdUseCase;
         this.createCoverImageUseCase = createCoverImageUseCase;
+        this.getGameCoverUseCase = getGameCoverUseCase;
     }
 
     @Override
@@ -71,5 +74,10 @@ public class GameServiceImpl implements IGameService {
     @Override
     public ReturnGameDto createCoverImage(Integer id, MultipartFile file) {
         return ReturnGameDto.fromEntity(createCoverImageUseCase.execute(id, file));
+    }
+
+    @Override
+    public String getCoverImage(Integer id) {
+        return getGameCoverUseCase.execute(id);
     }
 }
