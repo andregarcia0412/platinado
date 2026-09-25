@@ -14,8 +14,10 @@ import me.andregarcia0412.platinado.modules.game.dtos.ReturnGameDto;
 import me.andregarcia0412.platinado.modules.game.dtos.UpdateGameDto;
 import me.andregarcia0412.platinado.modules.game.interfaces.IGameService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -118,5 +120,28 @@ public class GameController {
     ) {
         gameService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping(value = "/{id}/cover", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(
+            summary = "Upload a game cover image",
+            description = "Uploads a cover image for the game and stores it in the bucket. Accepts JPEG, PNG or WEBP up to 5MB. Replaces and deletes the previous cover, if any."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Cover image uploaded",
+                    content = @Content(schema = @Schema(implementation = ReturnGameDto.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Missing file, empty file or unsupported image type", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Game not found", content = @Content),
+            @ApiResponse(responseCode = "413", description = "File exceeds the maximum upload size", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Failed to store the file", content = @Content)
+    })
+    public ResponseEntity<ReturnGameDto> createCoverImage(
+            @Parameter(description = "Id of the game", example = "1") @PathVariable Integer id,
+            @Parameter(description = "Cover image file (JPEG, PNG or WEBP, max 5MB)") @RequestPart("file") MultipartFile file
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.createCoverImage(id, file));
     }
 }

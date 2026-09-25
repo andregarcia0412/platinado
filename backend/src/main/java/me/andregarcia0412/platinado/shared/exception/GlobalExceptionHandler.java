@@ -5,6 +5,7 @@ import me.andregarcia0412.platinado.shared.exception.exceptions.BadRequestExcept
 import me.andregarcia0412.platinado.shared.exception.exceptions.ConflictException;
 import me.andregarcia0412.platinado.shared.exception.exceptions.NotFoundException;
 import me.andregarcia0412.platinado.shared.exception.exceptions.UnauthorizedException;
+import me.andregarcia0412.platinado.shared.provider.storage.exception.StorageException;
 import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 
@@ -60,6 +63,35 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
     private ResponseEntity<ErrorMessage> badRequestHandler(BadRequestException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage(exception.getMessage(), HttpStatus.BAD_REQUEST));
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMaxUploadSizeExceededException(
+            MaxUploadSizeExceededException exception,
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode status,
+            @NonNull WebRequest request) {
+        return ResponseEntity.status(HttpStatus.CONTENT_TOO_LARGE).body(new ErrorMessage("File is too large", HttpStatus.CONTENT_TOO_LARGE));
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMissingServletRequestPart(
+            MissingServletRequestPartException exception,
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode status,
+            @NonNull WebRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage(
+                        "Required part '" + exception.getRequestPartName() + "' is missing",
+                        HttpStatus.BAD_REQUEST,
+                        exception.getRequestPartName()
+                )
+        );
+    }
+
+    @ExceptionHandler(StorageException.class)
+    private ResponseEntity<ErrorMessage> storageHandler(StorageException exception) {
+        logger.error("Storage failure", exception);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorMessage("Failed to store file", HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @ExceptionHandler(Exception.class)

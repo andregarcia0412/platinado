@@ -6,6 +6,7 @@ import me.andregarcia0412.platinado.modules.game.dtos.UpdateGameDto;
 import me.andregarcia0412.platinado.modules.game.interfaces.IGameService;
 import me.andregarcia0412.platinado.modules.game.usecases.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class GameServiceImpl implements IGameService {
     private final FindGameBySlugUseCase findGameBySlugUseCase;
     private final UpdateGameByIdUseCase updateGameByIdUseCase;
     private final DeleteGameByIdUseCase deleteGameByIdUseCase;
+    private final CreateCoverImageUseCase createCoverImageUseCase;
 
     public GameServiceImpl(
             CreateGameUseCase createGameUseCase,
@@ -24,7 +26,8 @@ public class GameServiceImpl implements IGameService {
             FindGameByIdUseCase findGameByIdUseCase,
             FindGameBySlugUseCase findGameBySlugUseCase,
             UpdateGameByIdUseCase updateGameByIdUseCase,
-            DeleteGameByIdUseCase deleteGameByIdUseCase
+            DeleteGameByIdUseCase deleteGameByIdUseCase,
+            CreateCoverImageUseCase createCoverImageUseCase
     ) {
         this.createGameUseCase = createGameUseCase;
         this.findAllGamesUseCase = findAllGamesUseCase;
@@ -32,6 +35,7 @@ public class GameServiceImpl implements IGameService {
         this.findGameBySlugUseCase = findGameBySlugUseCase;
         this.updateGameByIdUseCase = updateGameByIdUseCase;
         this.deleteGameByIdUseCase = deleteGameByIdUseCase;
+        this.createCoverImageUseCase = createCoverImageUseCase;
     }
 
     @Override
@@ -62,5 +66,10 @@ public class GameServiceImpl implements IGameService {
     @Override
     public void deleteById(Integer id) {
         deleteGameByIdUseCase.execute(id);
+    }
+
+    @Override
+    public ReturnGameDto createCoverImage(Integer id, MultipartFile file) {
+        return ReturnGameDto.fromEntity(createCoverImageUseCase.execute(id, file));
     }
 }
