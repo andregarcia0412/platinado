@@ -1,0 +1,27 @@
+<header class="min-w-full flex items-center justify-between px-8 py-4 bg-bg-deep">
+  <span class="text-xl text-fg">PLATINADO</span>
+
+  <div class="flex gap-8 items-center">
+    <nav class="flex gap-6">
+      @let baseClass = 'font-medium transition-colors';
+      <a
+        routerLink="/my-games"
+        #rlaMyGames="routerLinkActive"
+        routerLinkActive
+        [ngClass]="[baseClass, rlaMyGames.isActive ? 'text-fg' : 'text-fg-muted']"
+      >
+        Minha estante
+      </a>
+
+      <a
+        routerLink="/catalogue"
+        #rlaCatalogue="routerLinkActive"
+        routerLinkActive
+        [ngClass]="[baseClass, rlaCatalogue.isActive ? 'text-fg' : 'text-fg-muted']"
+      >
+        Catálogo
+      </a>
+    </nav>
+    <app-avatar />
+  </div>
+</header>
