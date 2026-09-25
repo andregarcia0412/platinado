@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Auth } from './features/auth/auth';
 import { authGuard } from './features/auth/guards/auth.guard';
 import { MyGames } from './features/my-games/my-games';
+import { Catalogue } from './features/catalogue/catalogue';
 
 export const routes: Routes = [
   {
@@ -14,5 +15,10 @@ export const routes: Routes = [
     component: MyGames,
     title: 'My Games',
     canActivate: [authGuard],
+  },
+  {
+    path: 'catalogue',
+    component: Catalogue,
+    title: 'Catalogue',
   },
 ];

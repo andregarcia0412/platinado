@@ -1,0 +1,12 @@
+<button
+  class="flex items-center justify-center whitespace-nowrap px-3 py-1 border text-sm rounded-full cursor-pointer hover:border-fg-strong hover:text-fg-strong"
+  [ngClass]="
+    selected()
+      ? 'border-accent text-accent bg-accent/15'
+      : 'border-status-backlog text-status-backlog'
+  "
+  (click)="pillClick.emit()"
+  type="button"
+>
+  {{ text() }}
+</button>
