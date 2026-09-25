@@ -1,0 +1,9 @@
+<button
+  class="flex items-center justify-center gap-2 border-2 border-accent px-3 py-2 rounded-lg hover:bg-accent/15 cursor-pointer"
+>
+  @if (icon(); as icon) {
+    <img [src]="icon" alt="" height="24" width="24" draggable="false" />
+  }
+
+  <span class="text-accent">{{ text() }}</span>
+</button>
