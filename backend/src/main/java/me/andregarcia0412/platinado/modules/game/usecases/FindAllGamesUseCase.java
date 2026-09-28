@@ -2,9 +2,9 @@ package me.andregarcia0412.platinado.modules.game.usecases;
 
 import me.andregarcia0412.platinado.modules.game.entities.Game;
 import me.andregarcia0412.platinado.modules.game.interfaces.IGameRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class FindAllGamesUseCase {
@@ -14,7 +14,10 @@ public class FindAllGamesUseCase {
         this.gameRepository = gameRepository;
     }
 
-    public List<Game> execute() {
-        return gameRepository.findAll();
+    public Page<Game> execute(Integer gameTypeId, Pageable pageable) {
+        if(gameTypeId != null) {
+            return gameRepository.findAllByGameTypeId(gameTypeId, pageable);
+        }
+        return gameRepository.findAll(pageable);
     }
 }

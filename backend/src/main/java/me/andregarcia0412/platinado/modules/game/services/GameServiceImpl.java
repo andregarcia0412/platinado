@@ -6,7 +6,9 @@ import me.andregarcia0412.platinado.modules.game.dtos.UpdateGameDto;
 import me.andregarcia0412.platinado.modules.game.entities.Game;
 import me.andregarcia0412.platinado.modules.game.interfaces.IGameService;
 import me.andregarcia0412.platinado.modules.game.usecases.*;
+import me.andregarcia0412.platinado.shared.dto.PageResponseDto;
 import me.andregarcia0412.platinado.shared.provider.storage.IStorageProvider;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -55,8 +57,8 @@ public class GameServiceImpl implements IGameService {
     }
 
     @Override
-    public List<ReturnGameDto> findAll() {
-        return findAllGamesUseCase.execute().stream().map(this::toDto).toList();
+    public PageResponseDto<ReturnGameDto> findAll(Integer gameTypeId, Pageable pageable) {
+        return PageResponseDto.from(findAllGamesUseCase.execute(gameTypeId, pageable).map(this::toDto));
     }
 
     @Override

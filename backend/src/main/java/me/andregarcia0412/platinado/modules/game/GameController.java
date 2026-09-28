@@ -2,7 +2,6 @@ package me.andregarcia0412.platinado.modules.game;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -14,13 +13,15 @@ import me.andregarcia0412.platinado.modules.game.dtos.ReturnGameCoverDto;
 import me.andregarcia0412.platinado.modules.game.dtos.ReturnGameDto;
 import me.andregarcia0412.platinado.modules.game.dtos.UpdateGameDto;
 import me.andregarcia0412.platinado.modules.game.interfaces.IGameService;
+import me.andregarcia0412.platinado.shared.dto.PageResponseDto;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/game")
@@ -53,18 +54,18 @@ public class GameController {
 
     @GetMapping
     @Operation(
-            summary = "List all games",
-            description = "Returns every game in the catalog."
+            summary = "List games (paginated)",
+            description = "Returns a page of games from the catalog, optionally filtered by game type. Pages are zero-based. Defaults to page 0, 20 games per page, sorted by name ascending. The page size is capped at 50. An unknown game type id returns an empty page."
     )
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Games listed",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = ReturnGameDto.class)))
-            )
+            @ApiResponse(responseCode = "200", description = "Page of games returned")
     })
-    public ResponseEntity<List<ReturnGameDto>> findAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(gameService.findAll());
+    public ResponseEntity<PageResponseDto<ReturnGameDto>> findAll(
+            @ParameterObject @PageableDefault(size = 20, sort = "name") Pageable pageable,
+            @Parameter(description = "Id of the game type to filter by. Omit to list games of every type.", example = "1")
+            @RequestParam(required = false) Integer gameTypeId
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.findAll(gameTypeId, pageable));
     }
 
     @GetMapping("/{slug}")
