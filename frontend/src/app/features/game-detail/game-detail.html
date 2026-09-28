@@ -2,6 +2,7 @@
   <app-header />
 
   @if (isLoading()) {
+    <app-game-detail-skeleton />
   } @else if (error()) {
   } @else {
     <section class="flex items-center justify-center gap-4">

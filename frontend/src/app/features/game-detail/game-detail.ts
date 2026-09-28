@@ -7,6 +7,7 @@ import { ParseYearPipe } from '../catalogue/pipes/parse-year-pipe';
 import { TranslateGameTypePipe } from '../catalogue/pipes/translate-game-type-pipe';
 import { DetailItem } from './components/detail-item/detail-item';
 import { GameDetailCard } from './components/game-detail-card/game-detail-card';
+import { GameDetailSkeleton } from './components/game-detail-skeleton/game-detail-skeleton';
 
 @Component({
   imports: [
@@ -16,6 +17,7 @@ import { GameDetailCard } from './components/game-detail-card/game-detail-card';
     TranslateGameTypePipe,
     DetailItem,
     GameDetailCard,
+    GameDetailSkeleton,
   ],
   selector: 'app-game-detail',
   templateUrl: './game-detail.html',
