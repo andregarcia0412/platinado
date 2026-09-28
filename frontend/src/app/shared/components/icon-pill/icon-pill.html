@@ -1,0 +1,10 @@
+<div
+  (click)="onPillClick()"
+  [class]="`group flex gap-2 items-center px-3 py-2 border border-line rounded-full cursor-pointer hover:border-status-playing ${isActive() ? 'bg-accent/20' : ''}`"
+>
+  <img [src]="icon()" alt="" height="16" width="16" />
+  <span
+    [class]="` text-sm group-hover:text-status-playing ${isActive() ? 'text-fg-strong' : 'text-status-playing/70'}`"
+    >{{ text() }}</span
+  >
+</div>
