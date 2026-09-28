@@ -12,6 +12,7 @@ import { ReturnGameDto } from './model/game.dto';
 import { ParseYearPipe } from './pipes/parse-year-pipe';
 import { TranslateGameTypePipe } from './pipes/translate-game-type-pipe';
 import { GAME_TYPE_IDS } from './utils/game-type-id';
+import { OutlinedButton } from '../../shared/components/outlined-button/outlined-button';
 
 @Component({
   imports: [
@@ -23,6 +24,7 @@ import { GAME_TYPE_IDS } from './utils/game-type-id';
     GameCardSkeleton,
     RangePipe,
     InViewport,
+    OutlinedButton,
   ],
   selector: 'app-catalogue',
   templateUrl: './catalogue.html',
@@ -88,5 +90,9 @@ export class Catalogue implements OnInit {
 
   onGameClick(slug: string) {
     this.router.navigate(['/game', slug]);
+  }
+
+  onSeeAllClicked() {
+    this.filterBy(GameTypeFilterEnum.ALL);
   }
 }
