@@ -1,0 +1,7 @@
+<div class="flex items-center justify-center h-90 w-60 border border-surface rounded-lg">
+  @if (cover(); as cover) {
+    <img [src]="cover" [alt]="name()" class="size-full object-cover rounded-lg" />
+  } @else {
+    <img src="/icons/image.svg" [alt]="name()" height="48" width="48" draggable="false" />
+  }
+</div>
