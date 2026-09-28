@@ -10,9 +10,18 @@ import { translateGameType } from './utils/translateGameType';
 import { TranslateGameTypePipe } from './pipes/translate-game-type-pipe';
 import { GameCardSkeleton } from '../../shared/components/game-card-skeleton/game-card-skeleton';
 import { RangePipe } from '../../shared/pipes/range-pipe';
+import { Router } from '@angular/router';
 
 @Component({
-  imports: [GameTypePill, Header, GameCard, ParseYearPipe, TranslateGameTypePipe, GameCardSkeleton, RangePipe],
+  imports: [
+    GameTypePill,
+    Header,
+    GameCard,
+    ParseYearPipe,
+    TranslateGameTypePipe,
+    GameCardSkeleton,
+    RangePipe,
+  ],
   selector: 'app-catalogue',
   templateUrl: './catalogue.html',
 })
@@ -20,6 +29,7 @@ export class Catalogue implements OnInit {
   private readonly gameService = inject(GameService);
   protected readonly filters = Object.values(GameTypeFilterEnum);
   protected readonly selectedFilter = signal<GameTypeFilterEnum>(GameTypeFilterEnum.ALL);
+  private readonly router = inject(Router);
 
   protected readonly games = signal<ReturnGameDto[]>([]);
   protected readonly filteredGames = computed(() => {
@@ -41,5 +51,9 @@ export class Catalogue implements OnInit {
 
   filterBy(type: GameTypeFilterEnum) {
     this.selectedFilter.set(type);
+  }
+
+  onGameClick(slug: string) {
+    this.router.navigate(['/game', slug]);
   }
 }

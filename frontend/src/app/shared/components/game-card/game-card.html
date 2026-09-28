@@ -1,5 +1,6 @@
 <article class="flex flex-col gap-2">
   <div
+    (click)="onGameClick()"
     class="relative flex flex-col items-center justify-center h-56.25 w-37.5 border border-surface rounded-lg transition duration-100 ease-in-out hover:scale-110 hover:-translate-y-4 hover:border-accent cursor-pointer"
   >
     <span
@@ -7,9 +8,9 @@
       >{{ gameType() }}</span
     >
     @if (cover(); as cover) {
-      <img [src]="cover" [alt]="name()" class="flex-1 rounded-lg" />
+      <img [src]="cover" [alt]="name()" class="flex-1 rounded-lg" draggable="false" />
     } @else {
-      <img src="/icons/image.svg" [alt]="name()" height="24" width="24" />
+      <img src="/icons/image.svg" [alt]="name()" height="24" width="24" draggable="false" />
     }
   </div>
   <div class="flex flex-col gap-1">

@@ -3,6 +3,7 @@ import { Auth } from './features/auth/auth';
 import { authGuard } from './features/auth/guards/auth.guard';
 import { MyGames } from './features/my-games/my-games';
 import { Catalogue } from './features/catalogue/catalogue';
+import { GameDetail } from './features/game-detail/game-detail';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,11 @@ export const routes: Routes = [
     path: 'catalogue',
     component: Catalogue,
     title: 'Catalogue',
+    canActivate: [authGuard],
+  },
+  {
+    path: 'game/:slug',
+    component: GameDetail,
     canActivate: [authGuard],
   },
 ];
