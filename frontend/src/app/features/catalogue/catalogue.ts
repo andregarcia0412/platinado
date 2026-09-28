@@ -3,16 +3,16 @@ import { Router } from '@angular/router';
 import { GameCardSkeleton } from '../../shared/components/game-card-skeleton/game-card-skeleton';
 import { GameCard } from '../../shared/components/game-card/game-card';
 import { Header } from '../../shared/components/header/header';
+import { OutlinedButton } from '../../shared/components/outlined-button/outlined-button';
 import { InViewport } from '../../shared/directives/in-viewport';
+import { ParseYearPipe } from '../../shared/pipes/parse-year-pipe';
 import { RangePipe } from '../../shared/pipes/range-pipe';
+import { TranslateGameTypePipe } from '../../shared/pipes/translate-game-type-pipe';
 import { GameService } from '../../shared/service/game-service';
 import { GameTypePill } from './components/game-type-pill/game-type-pill';
 import { GameTypeFilterEnum } from './enum/game-type-filter.enum';
 import { ReturnGameDto } from './model/game.dto';
-import { ParseYearPipe } from './pipes/parse-year-pipe';
-import { TranslateGameTypePipe } from './pipes/translate-game-type-pipe';
 import { GAME_TYPE_IDS } from './utils/game-type-id';
-import { OutlinedButton } from '../../shared/components/outlined-button/outlined-button';
 
 @Component({
   imports: [

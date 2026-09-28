@@ -1,15 +1,15 @@
 import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { Header } from '../../shared/components/header/header';
 import { OutlinedButton } from '../../shared/components/outlined-button/outlined-button';
+import { NotFoundError } from '../../shared/error/not-found.error';
+import { ParseYearPipe } from '../../shared/pipes/parse-year-pipe';
+import { TranslateGameTypePipe } from '../../shared/pipes/translate-game-type-pipe';
 import { GameService } from '../../shared/service/game-service';
 import { ReturnGameDto } from '../catalogue/model/game.dto';
-import { ParseYearPipe } from '../catalogue/pipes/parse-year-pipe';
-import { TranslateGameTypePipe } from '../catalogue/pipes/translate-game-type-pipe';
 import { DetailItem } from './components/detail-item/detail-item';
 import { GameDetailCard } from './components/game-detail-card/game-detail-card';
 import { GameDetailSkeleton } from './components/game-detail-skeleton/game-detail-skeleton';
-import { NotFoundError } from '../../shared/error/not-found.error';
-import { Router } from '@angular/router';
 
 @Component({
   imports: [
