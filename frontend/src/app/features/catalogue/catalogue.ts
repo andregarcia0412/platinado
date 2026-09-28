@@ -5,7 +5,7 @@ import { GameTypePill } from './components/game-type-pill/game-type-pill';
 import { GameTypeFilterEnum } from './enum/game-type-filter.enum';
 import { ReturnGameDto } from './model/game.dto';
 import { ParseYearPipe } from './pipes/parse-year-pipe';
-import { GameService } from './services/game-service';
+import { GameService } from '../../shared/service/game-service';
 import { translateGameType } from './utils/translateGameType';
 import { TranslateGameTypePipe } from './pipes/translate-game-type-pipe';
 import { GameCardSkeleton } from '../../shared/components/game-card-skeleton/game-card-skeleton';
@@ -43,9 +43,10 @@ export class Catalogue implements OnInit {
   async ngOnInit() {
     try {
       this.games.set(await this.gameService.listGames());
-      this.isLoading.set(false);
     } catch (e) {
       if (e instanceof Error) this.error.set(e.message);
+    } finally {
+      this.isLoading.set(false);
     }
   }
 
