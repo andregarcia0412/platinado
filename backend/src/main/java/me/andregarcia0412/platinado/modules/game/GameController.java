@@ -61,7 +61,7 @@ public class GameController {
             @ApiResponse(responseCode = "200", description = "Page of games returned")
     })
     public ResponseEntity<PageResponseDto<ReturnGameDto>> findAll(
-            @ParameterObject @PageableDefault(size = 20, sort = "name") Pageable pageable,
+            @ParameterObject @PageableDefault(size = 20, sort = {"name", "id"}) Pageable pageable,
             @Parameter(description = "Id of the game type to filter by. Omit to list games of every type.", example = "1")
             @RequestParam(required = false) Integer gameTypeId
     ) {
