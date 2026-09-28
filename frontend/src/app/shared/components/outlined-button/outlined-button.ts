@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   imports: [],
@@ -8,4 +8,9 @@ import { Component, input } from '@angular/core';
 export class OutlinedButton {
   readonly icon = input<string>();
   readonly text = input.required<string>();
+  readonly onClicked = output<void>();
+
+  onButtonClick() {
+    this.onClicked.emit();
+  }
 }

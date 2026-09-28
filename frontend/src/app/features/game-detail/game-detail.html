@@ -4,6 +4,17 @@
   @if (isLoading()) {
     <app-game-detail-skeleton />
   } @else if (error()) {
+  } @else if (isNotFound()) {
+    <section class="flex flex-col items-center gap-4">
+      <h1 class="text-4xl text-fg-strong">404 | Jogo não encontrado</h1>
+      <p class="text-fg-muted">
+        Nenhum jogo do catálogo usa o endereço
+        <code class="bg-bg-deep px-2 py-1 rounded-md">{{ slug() }}</code
+        >. Ele pode ter sido removido ou o link está incorreto.
+      </p>
+
+      <app-outlined-button text="Retornar para catalogo" (onClicked)="onReturnClick()" />
+    </section>
   } @else {
     <section class="flex items-center justify-center gap-4">
       <div class="px-4">

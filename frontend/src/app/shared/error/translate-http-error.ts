@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { BadRequestError } from './bad-request.error';
 import { ConflictError } from './conflict.error';
+import { ErrorMessageDto } from './error-dto';
 import { InternalServerError } from './internal-server.error';
+import { NotFoundError } from './not-found.error';
 import { UnauthorizedError } from './unauthorized.error';
 import { UnexpectedError } from './unexpected.error';
-import { ErrorMessageDto } from './error-dto';
 
 const messages: Record<string, string> = {
   '400': 'Verifique os dados informados',
@@ -36,6 +37,8 @@ export const translateHttpError = (e: unknown): never => {
       throw new BadRequestError(message, field);
     case 401:
       throw new UnauthorizedError(message);
+    case 404:
+      throw new NotFoundError(message);
     case 409:
       throw new ConflictError(message, field);
     default:
