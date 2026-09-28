@@ -6,9 +6,10 @@ import { ParseYearPipe } from '../../shared/pipes/parse-year-pipe';
 import { GAME_STATUS } from './utils/game-status';
 import { IconPill } from '../../shared/components/icon-pill/icon-pill';
 import { GameStatusEnum } from './enum/game-status.enum';
+import { ReturnToScreen } from '../../shared/components/return-to-screen/return-to-screen';
 
 @Component({
-  imports: [Header, GameDetailCard, ParseYearPipe, IconPill],
+  imports: [Header, GameDetailCard, ParseYearPipe, IconPill, ReturnToScreen],
   selector: 'app-add-game',
   templateUrl: './add-game.html',
 })

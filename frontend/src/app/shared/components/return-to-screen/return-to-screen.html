@@ -1,0 +1,15 @@
+<button
+  class="flex gap-1 text-sm items-center text-fg-muted hover:text-fg-strong cursor-pointer hover:underline"
+  (click)="goBack()"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    height="20"
+    width="20"
+    viewBox="0 -960 960 960"
+    fill="currentColor"
+  >
+    <path d="M400-240 160-480l240-240 56 58-142 142h486v80H314l142 142-56 58Z" />
+  </svg>
+  <span>{{ text() }}</span>
+</button>

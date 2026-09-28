@@ -1,10 +1,13 @@
-<section class="flex flex-col bg-bg min-h-screen">
+<section class="flex flex-col bg-bg min-h-screen gap-4">
   <app-header />
 
   <section class="flex items-center justify-center gap-4">
     <article>
       <div class="flex flex-col gap-2">
-        <app-game-detail-card [cover]="game().coverUrl ?? undefined" [name]="game().name" />
+        <div class="flex flex-col gap-4">
+          <app-return-to-screen text="Voltar ao jogo" />
+          <app-game-detail-card [cover]="game().coverUrl ?? undefined" [name]="game().name" />
+        </div>
         <p class="text-fg-strong text-lg">{{ game().name }}</p>
       </div>
       <span class="text-sm text-fg-muted">{{ game().firstReleaseDate | parseYear }}</span>
