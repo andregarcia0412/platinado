@@ -1,14 +1,22 @@
 import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
-import { ReturnGameDto } from '../catalogue/model/game.dto';
-import { GameService } from '../../shared/service/game-service';
 import { Header } from '../../shared/components/header/header';
-import { ParseYearPipe } from '../catalogue/pipes/parse-year-pipe';
 import { OutlinedButton } from '../../shared/components/outlined-button/outlined-button';
+import { GameService } from '../../shared/service/game-service';
+import { ReturnGameDto } from '../catalogue/model/game.dto';
+import { ParseYearPipe } from '../catalogue/pipes/parse-year-pipe';
 import { TranslateGameTypePipe } from '../catalogue/pipes/translate-game-type-pipe';
 import { DetailItem } from './components/detail-item/detail-item';
+import { GameDetailCard } from './components/game-detail-card/game-detail-card';
 
 @Component({
-  imports: [Header, ParseYearPipe, OutlinedButton, TranslateGameTypePipe, DetailItem],
+  imports: [
+    Header,
+    ParseYearPipe,
+    OutlinedButton,
+    TranslateGameTypePipe,
+    DetailItem,
+    GameDetailCard,
+  ],
   selector: 'app-game-detail',
   templateUrl: './game-detail.html',
 })
