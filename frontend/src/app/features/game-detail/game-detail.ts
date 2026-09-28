@@ -8,7 +8,7 @@ import { TranslateGameTypePipe } from '../../shared/pipes/translate-game-type-pi
 import { GameService } from '../../shared/service/game-service';
 import { ReturnGameDto } from '../catalogue/model/game.dto';
 import { DetailItem } from './components/detail-item/detail-item';
-import { GameDetailCard } from './components/game-detail-card/game-detail-card';
+import { GameDetailCard } from '../../shared/components/game-detail-card/game-detail-card';
 import { GameDetailSkeleton } from './components/game-detail-skeleton/game-detail-skeleton';
 
 @Component({
@@ -55,6 +55,14 @@ export class GameDetail implements OnInit {
     } finally {
       this.isLoading.set(false);
     }
+  }
+
+  onAddClick() {
+    this.router.navigate(['/add-game'], {
+      state: {
+        game: this.game(),
+      },
+    });
   }
 
   onReturnClick() {
