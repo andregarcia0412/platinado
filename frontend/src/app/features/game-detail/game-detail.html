@@ -13,7 +13,11 @@
         >. Ele pode ter sido removido ou o link está incorreto.
       </p>
 
-      <app-outlined-button text="Retornar para catalogo" (onClicked)="onReturnClick()" />
+      <app-outlined-button
+        text="Retornar para catalogo"
+        icon="/icons/browse.svg"
+        (onClicked)="onReturnClick()"
+      />
     </section>
   } @else {
     <section class="flex items-center justify-center gap-4">

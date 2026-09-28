@@ -1,0 +1,16 @@
+<section class="flex flex-col bg-bg min-h-screen">
+  <div class="flex flex-col flex-1 items-center justify-center gap-4">
+    <h1 class="text-4xl text-fg-strong">404 | Página não encontrada</h1>
+    <p class="text-fg-muted">
+      Não encontramos nenhuma página em
+      <code class="bg-bg-deep px-2 py-1 rounded-md">{{ currentUrl }}</code
+      >. O endereço pode ter sido digitado errado ou a página foi removida
+    </p>
+
+    <app-outlined-button
+      text="Voltar para catálogo"
+      icon="/icons/browse.svg"
+      (onClicked)="onReturnClick()"
+    />
+  </div>
+</section>

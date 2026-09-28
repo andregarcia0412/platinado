@@ -4,6 +4,7 @@ import { authGuard } from './features/auth/guards/auth.guard';
 import { MyGames } from './features/my-games/my-games';
 import { Catalogue } from './features/catalogue/catalogue';
 import { GameDetail } from './features/game-detail/game-detail';
+import { NotFound } from './features/not-found/not-found';
 
 export const routes: Routes = [
   {
@@ -27,5 +28,9 @@ export const routes: Routes = [
     path: 'game/:slug',
     component: GameDetail,
     canActivate: [authGuard],
+  },
+  {
+    path: '**',
+    component: NotFound,
   },
 ];
