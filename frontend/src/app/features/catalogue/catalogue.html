@@ -22,7 +22,7 @@
     </div>
   } @else {
     <div class="grid grid-cols-[repeat(auto-fill,9.375rem)] justify-center gap-x-4 gap-y-6">
-      @for (game of filteredGames(); track game.id) {
+      @for (game of games(); track game.id) {
         <app-game-card
           [gameType]="game.gameType.type | translateGameType"
           [name]="game.name"
@@ -32,6 +32,16 @@
           (gameClicked)="onGameClick($event)"
         />
       }
+
+      @if (isLoadingMore()) {
+        @for (_ of 10 | range; track $index) {
+          <app-game-card-skeleton />
+        }
+      }
     </div>
+
+    @if (hasMore() && !isLoadingMore()) {
+      <div appInViewport (inViewport)="loadMore()"></div>
+    }
   }
 </section>
