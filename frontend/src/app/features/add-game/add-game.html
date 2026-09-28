@@ -1,1 +1,29 @@
-<p>add-game works!</p>
+<section class="flex flex-col bg-bg min-h-screen">
+  <app-header />
+
+  <section class="flex items-center justify-center gap-4">
+    <article>
+      <div class="flex flex-col gap-2">
+        <app-game-detail-card [cover]="game().coverUrl ?? undefined" [name]="game().name" />
+        <p class="text-fg-strong text-lg">{{ game().name }}</p>
+      </div>
+      <span class="text-sm text-fg-muted">{{ game().firstReleaseDate | parseYear }}</span>
+    </article>
+
+    <article class="flex flex-col p-4 gap-4 max-w-3xl">
+      <h1 class="text-4xl text-fg-strong font-semibold">Como foi jogar?</h1>
+
+      <p class="text-sm text-label">Status <span class="text-danger">*</span></p>
+      <div class="flex gap-2">
+        @for (status of statuses; track status.id) {
+          <app-icon-pill
+            [text]="status.label"
+            [icon]="status.icon"
+            (onClicked)="selectStatus(status.value)"
+            [isActive]="selectedStatus() === status.value"
+          />
+        }
+      </div>
+    </article>
+  </section>
+</section>
