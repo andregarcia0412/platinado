@@ -59,11 +59,15 @@ public class UserGame {
 
     protected UserGame() {}
 
-    public UserGame(User user, Game game, GameCompletionStatus gameCompletionStatus) {
-        this.id = new UserGameKey(user.getId(), game.getId());
-        this.user = user;
-        this.game = game;
-        this.gameCompletionStatus = gameCompletionStatus;
+    private UserGame(Builder b) {
+        id = new UserGameKey(b.user.getId(), b.game.getId());
+        user = b.user;
+        game = b.game;
+        hoursPlayed = b.hoursPlayed;
+        startingDate = b.startingDate;
+        finishingDate = b.finishingDate;
+        grade = b.grade;
+        note = b.note;
     }
 
     public UserGameKey getId() {
@@ -128,5 +132,51 @@ public class UserGame {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public static class Builder {
+        private final User user;
+        private final Game game;
+        private final GameCompletionStatus gameCompletionStatus;
+        private BigDecimal hoursPlayed;
+        private LocalDateTime startingDate;
+        private LocalDateTime finishingDate;
+        private BigDecimal grade;
+        private String note;
+
+        private Builder(User user, Game game, GameCompletionStatus gameCompletionStatus) {
+            this.user = user;
+            this.game = game;
+            this.gameCompletionStatus = gameCompletionStatus;
+        }
+
+        public Builder hoursPlayed(BigDecimal hoursPlayed) {
+            this.hoursPlayed = hoursPlayed;
+            return this;
+        }
+
+        public Builder startingDate(LocalDateTime startingDate) {
+            this.startingDate = startingDate;
+            return this;
+        }
+
+        public Builder finishingDate(LocalDateTime finishingDate) {
+            this.finishingDate = finishingDate;
+            return this;
+        }
+
+        public Builder grade(BigDecimal grade) {
+            this.grade = grade;
+            return this;
+        }
+
+        public Builder note(String note) {
+            this.note = note;
+            return this;
+        }
+
+        public UserGame build() {
+            return new UserGame(this);
+        }
     }
 }
