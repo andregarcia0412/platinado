@@ -16,17 +16,57 @@
     <article class="flex flex-col p-4 gap-4 max-w-3xl">
       <h1 class="text-4xl text-fg-strong font-semibold">Como foi jogar?</h1>
 
-      <p class="text-sm text-label">Status <span class="text-danger">*</span></p>
-      <div class="flex gap-2">
-        @for (status of statuses; track status.id) {
-          <app-icon-pill
-            [text]="status.label"
-            [icon]="status.icon"
-            (onClicked)="selectStatus(status.value)"
-            [isActive]="selectedStatus() === status.value"
-          />
+      <div class="flex flex-col gap-2">
+        <p class="text-sm text-label">Status <span class="text-danger">*</span></p>
+        <div class="flex gap-2">
+          @for (status of statuses; track status.id) {
+            <app-icon-pill
+              [text]="status.label"
+              [icon]="status.icon"
+              (onClicked)="selectStatus(status.value)"
+              [isActive]="form.controls.status.value === status.value"
+            />
+          }
+        </div>
+
+        @if (form.controls.status.touched && form.controls.status.hasError('required')) {
+          <span class="text-sm text-danger">{{ messages.status.required }}</span>
         }
       </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+        <div class="flex gap-4">
+          <app-add-game-input
+            [control]="form.controls.hoursPlayed"
+            [errors]="messages.hoursPlayed"
+            type="number"
+            label="Horas jogadas"
+            placeholder="0"
+          />
+
+          <app-add-game-input
+            [control]="form.controls.startedAt"
+            type="date"
+            label="Começou em"
+            placeholder="dd/mm/aaaa"
+          />
+
+          <app-add-game-input
+            [control]="form.controls.finishedAt"
+            type="date"
+            label="Terminou em"
+            placeholder="dd/mm/aaaa"
+          />
+        </div>
+
+        <app-add-game-input
+          [control]="form.controls.annotations"
+          [errors]="messages.annotations"
+          type="textarea"
+          label="Anotações"
+          placeholder="O que ficou com você desse jogo? Só você e quem visitar sua estante vão ver."
+        />
+      </form>
     </article>
   </section>
 </section>

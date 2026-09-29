@@ -1,0 +1,29 @@
+<div class="flex flex-col gap-1 min-w-full">
+  <label [for]="inputId" class="text-xs text-label">{{ label() }}</label>
+  @if (type() !== 'textarea') {
+    <input
+      [id]="inputId"
+      [formControl]="control()"
+      [type]="type()"
+      [placeholder]="placeholder()"
+      autocomplete="off"
+      class="bg-bg-deep border-2 border-line text-fg outline-none rounded-lg py-2 px-3 focus:border-accent hover:border-fg-muted"
+      [min]="min()"
+    />
+  } @else {
+    <textarea
+      [id]="inputId"
+      [formControl]="control()"
+      [placeholder]="placeholder()"
+      autocomplete="off"
+      maxlength="512"
+      class="bg-bg-deep border border-line text-fg outline-none rounded-lg py-2 px-3 resize-none min-h-32 focus:border-accent hover:border-fg-muted"
+    >
+    </textarea>
+    <p class="text-fg-muted text-sm self-end">{{ length() }}/512</p>
+  }
+
+  @if (message(); as text) {
+    <span class="text-sm text-danger">{{ text }}</span>
+  }
+</div>
