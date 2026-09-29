@@ -10,9 +10,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record CreateUserGameDto(
-    @NotNull(message = "userId can't be null")
-    @Positive(message = "userId must be positive")
-    Integer userId,
     @NotNull(message = "gameId can't be null")
     @Positive(message = "gameId must be positive")
     Integer gameId,

@@ -63,6 +63,7 @@ public class UserGame {
         id = new UserGameKey(b.user.getId(), b.game.getId());
         user = b.user;
         game = b.game;
+        gameCompletionStatus = b.gameCompletionStatus;
         hoursPlayed = b.hoursPlayed;
         startingDate = b.startingDate;
         finishingDate = b.finishingDate;
@@ -132,6 +133,10 @@ public class UserGame {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public static Builder builder(User user, Game game, GameCompletionStatus gameCompletionStatus) {
+        return new Builder(user, game, gameCompletionStatus);
     }
 
     public static class Builder {
