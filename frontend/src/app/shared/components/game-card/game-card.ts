@@ -1,7 +1,8 @@
 import { Component, input, output } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [],
+  imports: [RouterLink],
   selector: 'app-game-card',
   templateUrl: './game-card.html',
 })
@@ -11,9 +12,4 @@ export class GameCard {
   readonly gameType = input.required<string>();
   readonly cover = input<string>();
   readonly slug = input.required<string>();
-  readonly gameClicked = output<string>();
-
-  onGameClick() {
-    this.gameClicked.emit(this.slug());
-  }
 }

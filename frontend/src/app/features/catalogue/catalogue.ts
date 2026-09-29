@@ -88,10 +88,6 @@ export class Catalogue implements OnInit {
     }
   }
 
-  onGameClick(slug: string) {
-    this.router.navigate(['/game', slug]);
-  }
-
   onSeeAllClicked() {
     this.filterBy(GameTypeFilterEnum.ALL);
   }
