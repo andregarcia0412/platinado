@@ -37,29 +37,31 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
         <app-star-rating [control]="form.controls.rating" [errors]="messages.rating" />
 
-        <div class="flex gap-4">
-          <app-add-game-input
-            [control]="form.controls.hoursPlayed"
-            [errors]="messages.hoursPlayed"
-            type="number"
-            label="Horas jogadas"
-            placeholder="0"
-          />
+        @if (this.form.controls.status.value !== 'Na fila') {
+          <div class="flex gap-4">
+            <app-add-game-input
+              [control]="form.controls.hoursPlayed"
+              [errors]="messages.hoursPlayed"
+              type="number"
+              label="Horas jogadas"
+              placeholder="0"
+            />
 
-          <app-add-game-input
-            [control]="form.controls.startedAt"
-            type="date"
-            label="Começou em"
-            placeholder="dd/mm/aaaa"
-          />
+            <app-add-game-input
+              [control]="form.controls.startedAt"
+              type="date"
+              label="Começou em"
+              placeholder="dd/mm/aaaa"
+            />
 
-          <app-add-game-input
-            [control]="form.controls.finishedAt"
-            type="date"
-            label="Terminou em"
-            placeholder="dd/mm/aaaa"
-          />
-        </div>
+            <app-add-game-input
+              [control]="form.controls.finishedAt"
+              type="date"
+              label="Terminou em"
+              placeholder="dd/mm/aaaa"
+            />
+          </div>
+        }
 
         <app-add-game-input
           [control]="form.controls.annotations"
@@ -68,6 +70,16 @@
           label="Anotações"
           placeholder="O que ficou com você desse jogo? Só você e quem visitar sua estante vão ver."
         />
+
+        <hr class="border-line" />
+
+        <div class="self-end">
+          <app-outlined-button
+            icon="/icons/add.svg"
+            text="Salvar na estante"
+            (onClicked)="onSubmit()"
+          />
+        </div>
       </form>
     </article>
   </section>

@@ -1,20 +1,21 @@
-import { Component, inject, input, signal } from '@angular/core';
-import { GameDetailCard } from '../../shared/components/game-detail-card/game-detail-card';
-import { Header } from '../../shared/components/header/header';
-import { ReturnGameDto } from '../catalogue/model/game.dto';
-import { ParseYearPipe } from '../../shared/pipes/parse-year-pipe';
-import { GAME_STATUS } from './utils/game-status';
-import { IconPill } from '../../shared/components/icon-pill/icon-pill';
-import { GameStatusEnum } from './enum/game-status.enum';
-import { ReturnToScreen } from '../../shared/components/return-to-screen/return-to-screen';
-import { AddGameInput } from './components/add-game-input/add-game-input';
-import { StarRating } from './components/star-rating/star-rating';
+import { Component, computed, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   ReactiveFormsModule,
   Validators,
   ɵInternalFormsSharedModule,
 } from '@angular/forms';
+import { GameDetailCard } from '../../shared/components/game-detail-card/game-detail-card';
+import { Header } from '../../shared/components/header/header';
+import { IconPill } from '../../shared/components/icon-pill/icon-pill';
+import { OutlinedButton } from '../../shared/components/outlined-button/outlined-button';
+import { ReturnToScreen } from '../../shared/components/return-to-screen/return-to-screen';
+import { ParseYearPipe } from '../../shared/pipes/parse-year-pipe';
+import { ReturnGameDto } from '../catalogue/model/game.dto';
+import { AddGameInput } from './components/add-game-input/add-game-input';
+import { StarRating } from './components/star-rating/star-rating';
+import { GameStatusEnum } from './enum/game-status.enum';
+import { GAME_STATUS } from './utils/game-status';
 
 @Component({
   imports: [
@@ -27,6 +28,7 @@ import {
     StarRating,
     ɵInternalFormsSharedModule,
     ReactiveFormsModule,
+    OutlinedButton,
   ],
   selector: 'app-add-game',
   templateUrl: './add-game.html',
@@ -67,6 +69,9 @@ export class AddGame {
 
   protected selectStatus(status: GameStatusEnum) {
     this.form.controls.status.setValue(status);
+    if (status === GameStatusEnum.QUEUED) {
+      this.resetTimeRelatedFields();
+    }
   }
 
   protected onSubmit() {
@@ -74,5 +79,11 @@ export class AddGame {
     if (this.form.invalid) {
       return;
     }
+  }
+
+  private resetTimeRelatedFields() {
+    this.form.controls.hoursPlayed.reset();
+    this.form.controls.startedAt.reset();
+    this.form.controls.finishedAt.reset();
   }
 }
