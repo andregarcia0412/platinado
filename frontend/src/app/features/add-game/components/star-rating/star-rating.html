@@ -1,0 +1,58 @@
+<div class="flex flex-col gap-2">
+  <p class="text-sm text-label">Nota <span class="text-danger">*</span></p>
+
+  <div class="flex items-center gap-4">
+    <div class="flex gap-1" role="group" aria-label="Nota" (mouseleave)="hovered.set(null)">
+      @for (i of stars(); track i) {
+        <span class="relative block size-8">
+          <svg viewBox="0 0 24 24" class="absolute inset-0 size-8 fill-none stroke-line-strong">
+            <path
+              stroke-width="1.5"
+              stroke-linejoin="round"
+              d="M12 2.5l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.49l-5.87 3.09 1.12-6.54-4.75-4.63 6.56-.95L12 2.5z"
+            />
+          </svg>
+
+          <span class="absolute inset-0 overflow-hidden" [style.width.%]="fill(i)">
+            <svg viewBox="0 0 24 24" class="size-8 fill-yellow stroke-yellow">
+              <path
+                stroke-width="1.5"
+                stroke-linejoin="round"
+                d="M12 2.5l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.49l-5.87 3.09 1.12-6.54-4.75-4.63 6.56-.95L12 2.5z"
+              />
+            </svg>
+          </span>
+
+          <button
+            type="button"
+            class="absolute inset-y-0 left-0 w-1/2 cursor-pointer"
+            [attr.aria-label]="'Dar nota ' + (i + 0.5)"
+            (mouseenter)="hovered.set(i + 0.5)"
+            (click)="select(i + 0.5)"
+          ></button>
+          <button
+            type="button"
+            class="absolute inset-y-0 right-0 w-1/2 cursor-pointer"
+            [attr.aria-label]="'Dar nota ' + (i + 1)"
+            (mouseenter)="hovered.set(i + 1)"
+            (click)="select(i + 1)"
+          ></button>
+        </span>
+      }
+    </div>
+
+    @if (formatted(); as value) {
+      <span class="text-xl text-fg-strong tabular-nums">{{ value }}</span>
+      <button
+        type="button"
+        class="text-sm text-accent hover:text-accent-hover cursor-pointer hover:underline"
+        (click)="clear()"
+      >
+        Remover nota
+      </button>
+    }
+  </div>
+  @if (message(); as text) {
+    <span class="text-sm text-danger">{{ text }}</span>
+  }
+</div>
