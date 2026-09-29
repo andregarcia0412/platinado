@@ -8,6 +8,7 @@ import { IconPill } from '../../shared/components/icon-pill/icon-pill';
 import { GameStatusEnum } from './enum/game-status.enum';
 import { ReturnToScreen } from '../../shared/components/return-to-screen/return-to-screen';
 import { AddGameInput } from './components/add-game-input/add-game-input';
+import { StarRating } from './components/star-rating/star-rating';
 import {
   FormBuilder,
   ReactiveFormsModule,
@@ -23,6 +24,7 @@ import {
     IconPill,
     ReturnToScreen,
     AddGameInput,
+    StarRating,
     ɵInternalFormsSharedModule,
     ReactiveFormsModule,
   ],
@@ -34,6 +36,11 @@ export class AddGame {
 
   protected readonly form = this.fb.group({
     status: this.fb.control<GameStatusEnum | null>(null, [Validators.required]),
+    rating: this.fb.control<number | null>(null, [
+      Validators.required,
+      Validators.min(0.5),
+      Validators.max(5),
+    ]),
     hoursPlayed: this.fb.control<number | null>(null, [Validators.min(0)]),
     startedAt: this.fb.control<Date | null>(null),
     finishedAt: this.fb.control<Date | null>(null),
@@ -49,6 +56,9 @@ export class AddGame {
     },
     annotations: {
       maxlength: 'As anotações devem ter no máximo 512 caracteres',
+    },
+    rating: {
+      required: 'Dê uma nota ao jogo',
     },
   };
 

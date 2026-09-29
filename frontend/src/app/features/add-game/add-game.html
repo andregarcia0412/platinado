@@ -1,7 +1,7 @@
 <section class="flex flex-col bg-bg min-h-screen gap-4">
   <app-header />
 
-  <section class="flex items-center justify-center gap-4">
+  <section class="flex justify-center gap-4">
     <article>
       <div class="flex flex-col gap-2">
         <div class="flex flex-col gap-4">
@@ -35,6 +35,8 @@
       </div>
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+        <app-star-rating [control]="form.controls.rating" [errors]="messages.rating" />
+
         <div class="flex gap-4">
           <app-add-game-input
             [control]="form.controls.hoursPlayed"
