@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Router } from '@angular/router';
 import { GameCardSkeleton } from '../../shared/components/game-card-skeleton/game-card-skeleton';
 import { GameCard } from '../../shared/components/game-card/game-card';
 import { Header } from '../../shared/components/header/header';
@@ -33,7 +32,6 @@ export class Catalogue implements OnInit {
   private readonly gameService = inject(GameService);
   protected readonly filters = Object.values(GameTypeFilterEnum);
   protected readonly selectedFilter = signal<GameTypeFilterEnum>(GameTypeFilterEnum.ALL);
-  private readonly router = inject(Router);
 
   protected readonly games = signal<ReturnGameDto[]>([]);
   protected readonly isLoading = signal<boolean>(true);
