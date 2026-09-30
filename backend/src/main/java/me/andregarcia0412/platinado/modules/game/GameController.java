@@ -20,6 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,9 +35,10 @@ public class GameController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(
             summary = "Create a game",
-            description = "Creates a new game linked to an existing game type. The slug must be unique."
+            description = "Creates a new game linked to an existing game type. The slug must be unique. Requires the ADMIN role."
     )
     @ApiResponses({
             @ApiResponse(
@@ -45,6 +47,7 @@ public class GameController {
                     content = @Content(schema = @Schema(implementation = ReturnGameDto.class))
             ),
             @ApiResponse(responseCode = "400", description = "Invalid payload", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Authenticated user is not an admin", content = @Content),
             @ApiResponse(responseCode = "404", description = "Game type not found", content = @Content),
             @ApiResponse(responseCode = "409", description = "A game with this slug already exists", content = @Content)
     })
@@ -88,9 +91,10 @@ public class GameController {
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(
             summary = "Update a game by id",
-            description = "Partially updates a game. Only the fields present in the payload are changed. Resending the current slug is a no-op rather than a conflict."
+            description = "Partially updates a game. Only the fields present in the payload are changed. Resending the current slug is a no-op rather than a conflict. Requires the ADMIN role."
     )
     @ApiResponses({
             @ApiResponse(
@@ -99,6 +103,7 @@ public class GameController {
                     content = @Content(schema = @Schema(implementation = ReturnGameDto.class))
             ),
             @ApiResponse(responseCode = "400", description = "Invalid payload", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Authenticated user is not an admin", content = @Content),
             @ApiResponse(responseCode = "404", description = "Game or game type not found", content = @Content),
             @ApiResponse(responseCode = "409", description = "A game with this slug already exists", content = @Content)
     })
@@ -110,12 +115,14 @@ public class GameController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(
             summary = "Delete a game by id",
-            description = "Deletes the game matching the given id. Returns no content on success."
+            description = "Deletes the game matching the given id. Returns no content on success. Requires the ADMIN role."
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Game deleted", content = @Content)
+            @ApiResponse(responseCode = "204", description = "Game deleted", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Authenticated user is not an admin", content = @Content)
     })
     public ResponseEntity<Void> deleteById(
             @Parameter(description = "Id of the game", example = "1") @PathVariable Integer id
@@ -125,9 +132,10 @@ public class GameController {
     }
 
     @PostMapping(value = "/{id}/cover", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(
             summary = "Upload a game cover image",
-            description = "Uploads a cover image for the game and stores it in the bucket. Accepts JPEG, PNG or WEBP up to 5MB. Replaces and deletes the previous cover, if any."
+            description = "Uploads a cover image for the game and stores it in the bucket. Accepts JPEG, PNG or WEBP up to 5MB. Replaces and deletes the previous cover, if any. Requires the ADMIN role."
     )
     @ApiResponses({
             @ApiResponse(
@@ -136,6 +144,7 @@ public class GameController {
                     content = @Content(schema = @Schema(implementation = ReturnGameDto.class))
             ),
             @ApiResponse(responseCode = "400", description = "Missing file, empty file or unsupported image type", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Authenticated user is not an admin", content = @Content),
             @ApiResponse(responseCode = "404", description = "Game not found", content = @Content),
             @ApiResponse(responseCode = "413", description = "File exceeds the maximum upload size", content = @Content),
             @ApiResponse(responseCode = "500", description = "Failed to store the file", content = @Content)

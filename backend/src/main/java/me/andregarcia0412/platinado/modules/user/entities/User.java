@@ -1,6 +1,7 @@
 package me.andregarcia0412.platinado.modules.user.entities;
 
 import jakarta.persistence.*;
+import me.andregarcia0412.platinado.modules.user.enums.UserRole;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -26,6 +27,10 @@ public class User {
 
     @Column(name = "password_hash", nullable = false, length = 255)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private UserRole role = UserRole.USER;
 
     @Column(length = 512)
     private String bio;
@@ -61,6 +66,10 @@ public class User {
         return password;
     }
 
+    public UserRole getRole() {
+        return role;
+    }
+
     public String getBio() {
         return bio;
     }
@@ -83,6 +92,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     public void setBio(String bio) {
