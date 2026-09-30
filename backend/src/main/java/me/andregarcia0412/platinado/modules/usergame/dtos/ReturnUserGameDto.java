@@ -1,5 +1,6 @@
 package me.andregarcia0412.platinado.modules.usergame.dtos;
 
+import me.andregarcia0412.platinado.modules.game.dtos.ReturnGameDto;
 import me.andregarcia0412.platinado.modules.usergame.entities.GameCompletionStatus;
 import me.andregarcia0412.platinado.modules.usergame.entities.UserGame;
 
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 
 public record ReturnUserGameDto(
         Integer userId,
-        Integer gameId,
+        ReturnGameDto game,
         GameCompletionStatus gameCompletionStatus,
         BigDecimal hoursPlayed,
         LocalDateTime startingDate,
@@ -17,10 +18,10 @@ public record ReturnUserGameDto(
         String note,
         LocalDateTime createdAt
 ) {
-    public static ReturnUserGameDto fromEntity(UserGame userGame) {
+    public static ReturnUserGameDto fromEntity(UserGame userGame, String coverUrl) {
         return new ReturnUserGameDto(
                 userGame.getId().getUserId(),
-                userGame.getId().getGameId(),
+                ReturnGameDto.fromEntity(userGame.getGame(), coverUrl),
                 userGame.getGameCompletionStatus(),
                 userGame.getHoursPlayed(),
                 userGame.getStartingDate(),
