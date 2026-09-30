@@ -31,12 +31,23 @@
           <p class="text-fg-muted">Lançado em {{ game()?.firstReleaseDate | parseYear }}</p>
         </div>
 
-        @if (userGame()) {
+        @if (userGame(); as userGame) {
           <app-outlined-button
             text="Editar registro"
             icon="/icons/edit.svg"
             (onClicked)="onEditClick()"
           />
+
+          @if (completionStatus(); as status) {
+            <div class="w-fit">
+              <app-icon-pill
+                [text]="status.label"
+                [icon]="status.icon"
+                [isActive]="true"
+                [clickable]="false"
+              />
+            </div>
+          }
         } @else {
           <app-outlined-button
             text="Adicionar à estante"
@@ -88,7 +99,7 @@
               }
 
               @if (finishingDate()) {
-                <app-detail-item label="Platinou em" [detail]="finishingDate()! | dateToString" />
+                <app-detail-item label="Terminou em" [detail]="finishingDate()! | dateToString" />
               }
 
               <app-detail-item

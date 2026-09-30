@@ -9,9 +9,10 @@ export class IconPill {
   readonly text = input.required<string>();
   readonly icon = input.required<string>();
   readonly isActive = input<boolean>(false);
+  readonly clickable = input<boolean>(true);
   readonly onClicked = output<void>();
 
   onPillClick() {
-    this.onClicked.emit();
+    if (this.clickable()) this.onClicked.emit();
   }
 }

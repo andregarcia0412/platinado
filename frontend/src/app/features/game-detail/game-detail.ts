@@ -14,6 +14,9 @@ import { ReturnUserGameDto } from '../add-game/model/user-game-dto';
 import { ReturnGameDto } from '../catalogue/model/game.dto';
 import { DetailItem } from './components/detail-item/detail-item';
 import { GameDetailSkeleton } from './components/game-detail-skeleton/game-detail-skeleton';
+import { IconPill } from '../../shared/components/icon-pill/icon-pill';
+import { GAME_STATUS } from '../add-game/utils/game-status';
+import { translateGameStatus } from '../add-game/utils/translateGameStatus';
 
 @Component({
   imports: [
@@ -26,6 +29,7 @@ import { GameDetailSkeleton } from './components/game-detail-skeleton/game-detai
     GameDetailSkeleton,
     DateToStringPipe,
     FormatHoursPipe,
+    IconPill,
   ],
   selector: 'app-game-detail',
   templateUrl: './game-detail.html',
@@ -56,6 +60,11 @@ export class GameDetail implements OnInit {
   protected readonly userGameCreatedAt = computed(() =>
     this.stringToDate(this.userGame()?.createdAt),
   );
+  protected readonly completionStatus = computed(() => {
+    const userGame = this.userGame();
+    if (!userGame) return null;
+    return GAME_STATUS[translateGameStatus(userGame.gameCompletionStatus.status)];
+  });
 
   readonly slug = input.required<string>();
 
