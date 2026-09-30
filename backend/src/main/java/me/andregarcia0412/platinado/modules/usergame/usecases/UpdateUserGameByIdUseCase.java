@@ -3,6 +3,7 @@ package me.andregarcia0412.platinado.modules.usergame.usecases;
 import me.andregarcia0412.platinado.modules.usergame.dtos.UpdateUserGameDto;
 import me.andregarcia0412.platinado.modules.usergame.entities.GameCompletionStatus;
 import me.andregarcia0412.platinado.modules.usergame.entities.UserGame;
+import me.andregarcia0412.platinado.modules.usergame.entities.UserGameKey;
 import me.andregarcia0412.platinado.modules.usergame.interfaces.IGameCompletionStatusRepository;
 import me.andregarcia0412.platinado.modules.usergame.interfaces.IUserGameRepository;
 import me.andregarcia0412.platinado.shared.exception.exceptions.NotFoundException;
@@ -18,8 +19,8 @@ public class UpdateUserGameByIdUseCase {
         this.gameCompletionStatusRepository = gameCompletionStatusRepository;
     }
 
-    public UserGame execute(Integer id, UpdateUserGameDto updateUserGameDto) {
-        UserGame userGame = userGameRepository.findById(id)
+    public UserGame execute(Integer userId, Integer gameId, UpdateUserGameDto updateUserGameDto) {
+        UserGame userGame = userGameRepository.findById(new UserGameKey(userId, gameId))
                 .orElseThrow(() -> new NotFoundException("User game not found"));
 
         if(

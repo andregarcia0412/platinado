@@ -1,5 +1,6 @@
 package me.andregarcia0412.platinado.modules.usergame.usecases;
 
+import me.andregarcia0412.platinado.modules.usergame.entities.UserGameKey;
 import me.andregarcia0412.platinado.modules.usergame.interfaces.IUserGameRepository;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,7 @@ public class DeleteUserGameUseCase {
         this.userGameRepository = userGameRepository;
     }
 
-    public void execute(Integer id) {
-       userGameRepository.deleteById(id);
+    public void execute(Integer userId, Integer gameId) {
+       userGameRepository.deleteById(new UserGameKey(userId, gameId));
     }
 }

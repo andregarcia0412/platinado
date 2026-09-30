@@ -7,8 +7,10 @@ import me.andregarcia0412.platinado.modules.user.interfaces.IUserRepository;
 import me.andregarcia0412.platinado.modules.usergame.dtos.CreateUserGameDto;
 import me.andregarcia0412.platinado.modules.usergame.entities.GameCompletionStatus;
 import me.andregarcia0412.platinado.modules.usergame.entities.UserGame;
+import me.andregarcia0412.platinado.modules.usergame.entities.UserGameKey;
 import me.andregarcia0412.platinado.modules.usergame.interfaces.IGameCompletionStatusRepository;
 import me.andregarcia0412.platinado.modules.usergame.interfaces.IUserGameRepository;
+import me.andregarcia0412.platinado.shared.exception.exceptions.ConflictException;
 import me.andregarcia0412.platinado.shared.exception.exceptions.NotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +34,9 @@ public class CreateUserGameUseCase {
 
         Game game = gameRepository.findById(createUserGameDto.gameId())
                 .orElseThrow(() -> new NotFoundException("Game not found"));
+
+        if(userGameRepository.existsById(new UserGameKey(user.getId(), game.getId())))
+            throw new ConflictException("Game already added to user's library", "gameId");
 
         GameCompletionStatus gameCompletionStatus = gameCompletionStatusRepository.findById(createUserGameDto.gameCompletionStatusId())
                 .orElseThrow(() -> new NotFoundException("Game completion status not found"));

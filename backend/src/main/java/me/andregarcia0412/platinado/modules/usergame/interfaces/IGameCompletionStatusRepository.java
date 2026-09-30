@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface IGameCompletionStatusRepository {
     Optional<GameCompletionStatus> findById(Integer id);
     List<GameCompletionStatus> findAll();
-    Optional<GameCompletionStatus> existsByStatus(String status);
+    boolean existsByStatus(String status);
 }

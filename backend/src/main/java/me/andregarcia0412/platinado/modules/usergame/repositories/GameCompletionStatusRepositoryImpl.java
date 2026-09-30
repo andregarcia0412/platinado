@@ -26,7 +26,7 @@ public class GameCompletionStatusRepositoryImpl implements IGameCompletionStatus
     }
 
     @Override
-    public Optional<GameCompletionStatus> existsByStatus(String status) {
+    public boolean existsByStatus(String status) {
         return gameCompletionStatusJpaRepository.existsByStatus(status);
     }
 }

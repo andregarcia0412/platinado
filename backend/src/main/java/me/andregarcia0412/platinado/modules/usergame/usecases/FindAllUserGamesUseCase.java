@@ -14,10 +14,10 @@ public class FindAllUserGamesUseCase {
         this.userGameRepository = userGameRepository;
     }
 
-    public Page<UserGame> execute(Integer gameCompletionStatusId, Pageable pageable) {
+    public Page<UserGame> execute(Integer userId, Integer gameCompletionStatusId, Pageable pageable) {
         if(gameCompletionStatusId != null)
-            return userGameRepository.findAllByGameCompletionStatusId(gameCompletionStatusId, pageable);
+            return userGameRepository.findAllByUserIdAndGameCompletionStatusId(userId, gameCompletionStatusId, pageable);
 
-        return userGameRepository.findAll(pageable);
+        return userGameRepository.findAllByUserId(userId, pageable);
     }
 }
