@@ -1,9 +1,29 @@
-<section class="flex flex-col min-h-screen bg-bg">
+<section class="flex flex-col min-h-screen bg-bg gap-4">
   <app-header />
-  <article class="flex flex-col flex-1 items-center justify-center gap-2">
-    <h1 class="text-3xl text-fg font-semibold text-center">Sua estante está vazia</h1>
-    <p class="text-fg-muted text-center">Clique para adicionar um jogo</p>
+  @if (error()) {
+  } @else if (isLoading()) {
+    <article class="grid grid-cols-[repeat(auto-fill,9.375rem)] justify-center gap-x-4 gap-y-6">
+      @for (_ of 20 | range; track $index) {
+        <app-game-card-skeleton />
+      }
+    </article>
+  } @else if (games().length === 0) {
+    <article class="flex flex-col flex-1 items-center justify-center gap-2">
+      <h1 class="text-3xl text-fg font-semibold text-center">Sua estante está vazia</h1>
+      <p class="text-fg-muted text-center">Clique para adicionar um jogo</p>
 
-    <app-outlined-button text="Adicionar jogo" icon="/icons/add.svg" />
-  </article>
+      <app-outlined-button text="Adicionar jogo" icon="/icons/add.svg" />
+    </article>
+  } @else {
+    <article class="grid grid-cols-[repeat(auto-fill,9.375rem)] justify-center gap-x-4 gap-y-6">
+      @for (userGame of games(); track userGame.game.id) {
+        <app-game-card
+          [cover]="userGame.game.coverUrl ?? undefined"
+          [gameType]="userGame.game.gameType.type"
+          [name]="userGame.game.name"
+          [slug]="userGame.game.slug"
+        />
+      }
+    </article>
+  }
 </section>

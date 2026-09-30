@@ -1,3 +1,4 @@
+import { ReturnGameDto } from '../../catalogue/model/game.dto';
 import { GameCompletionStatusDto } from './game-completion-status-dto';
 
 export interface CreateUserGameDto {
@@ -12,7 +13,7 @@ export interface CreateUserGameDto {
 
 export interface ReturnUserGameDto {
   userId: number;
-  gameId: number;
+  game: ReturnGameDto;
   gameCompletionStatus: GameCompletionStatusDto;
   hoursPlayed: number | null;
   startingDate: Date | null;
