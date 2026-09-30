@@ -1,12 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
-import { CreateUserGameDto, ReturnUserGameDto } from '../model/user-game-dto';
+import { inject, Injectable, Service } from '@angular/core';
+import { CreateUserGameDto, ReturnUserGameDto } from '../../features/add-game/model/user-game-dto';
 import { firstValueFrom } from 'rxjs';
-import { translateHttpError } from '../../../shared/error/translate-http-error';
-import { PageResponse } from '../../../shared/model/page-response.dto';
+import { translateHttpError } from '../error/translate-http-error';
+import { PageResponse } from '../model/page-response.dto';
 
-@Service()
-export class AddGameService {
+@Injectable({ providedIn: 'root' })
+export class UserGameService {
   private readonly http = inject(HttpClient);
 
   async addToLibrary(dto: CreateUserGameDto): Promise<ReturnUserGameDto> {
