@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record ReturnUserGameDto(
+        Integer userId,
+        Integer gameId,
         GameCompletionStatus gameCompletionStatus,
         BigDecimal hoursPlayed,
         LocalDateTime startingDate,
@@ -17,6 +19,8 @@ public record ReturnUserGameDto(
 ) {
     public static ReturnUserGameDto fromEntity(UserGame userGame) {
         return new ReturnUserGameDto(
+                userGame.getId().getUserId(),
+                userGame.getId().getGameId(),
                 userGame.getGameCompletionStatus(),
                 userGame.getHoursPlayed(),
                 userGame.getStartingDate(),
