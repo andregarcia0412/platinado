@@ -22,6 +22,7 @@
           [gameType]="userGame.game.gameType.type"
           [name]="userGame.game.name"
           [slug]="userGame.game.slug"
+          [releaseYear]="userGame.game.firstReleaseDate | parseYear"
         />
       }
     </article>

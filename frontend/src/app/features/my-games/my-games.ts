@@ -6,9 +6,10 @@ import { ReturnUserGameDto } from '../add-game/model/user-game-dto';
 import { GameCard } from '../../shared/components/game-card/game-card';
 import { GameCardSkeleton } from '../../shared/components/game-card-skeleton/game-card-skeleton';
 import { RangePipe } from '../../shared/pipes/range-pipe';
+import { ParseYearPipe } from '../../shared/pipes/parse-year-pipe';
 
 @Component({
-  imports: [OutlinedButton, Header, GameCard, GameCardSkeleton, RangePipe],
+  imports: [OutlinedButton, Header, GameCard, GameCardSkeleton, RangePipe, ParseYearPipe],
   selector: 'app-my-games',
   templateUrl: './my-games.html',
 })
