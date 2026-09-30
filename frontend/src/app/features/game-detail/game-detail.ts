@@ -1,14 +1,18 @@
 import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { GameDetailCard } from '../../shared/components/game-detail-card/game-detail-card';
 import { Header } from '../../shared/components/header/header';
 import { OutlinedButton } from '../../shared/components/outlined-button/outlined-button';
 import { NotFoundError } from '../../shared/error/not-found.error';
+import { DateToStringPipe } from '../../shared/pipes/date-to-string-pipe';
+import { FormatHoursPipe } from '../../shared/pipes/format-hours-pipe';
 import { ParseYearPipe } from '../../shared/pipes/parse-year-pipe';
 import { TranslateGameTypePipe } from '../../shared/pipes/translate-game-type-pipe';
 import { GameService } from '../../shared/service/game-service';
+import { UserGameService } from '../../shared/service/user-game-service';
+import { ReturnUserGameDto } from '../add-game/model/user-game-dto';
 import { ReturnGameDto } from '../catalogue/model/game.dto';
 import { DetailItem } from './components/detail-item/detail-item';
-import { GameDetailCard } from '../../shared/components/game-detail-card/game-detail-card';
 import { GameDetailSkeleton } from './components/game-detail-skeleton/game-detail-skeleton';
 
 @Component({
@@ -20,12 +24,15 @@ import { GameDetailSkeleton } from './components/game-detail-skeleton/game-detai
     DetailItem,
     GameDetailCard,
     GameDetailSkeleton,
+    DateToStringPipe,
+    FormatHoursPipe,
   ],
   selector: 'app-game-detail',
   templateUrl: './game-detail.html',
 })
 export class GameDetail implements OnInit {
   private readonly gameService = inject(GameService);
+  private readonly userGameService = inject(UserGameService);
   private readonly router = inject(Router);
   protected readonly game = signal<ReturnGameDto | null>(null);
   protected readonly isLoading = signal<boolean>(true);
@@ -39,13 +46,24 @@ export class GameDetail implements OnInit {
     const date = this.game()?.createdAt;
     return date ? new Date(date) : null;
   });
+  protected readonly userGame = signal<ReturnUserGameDto | null>(null);
+  protected readonly startingDate = computed(() =>
+    this.stringToDate(this.userGame()?.startingDate),
+  );
+  protected readonly finishingDate = computed(() =>
+    this.stringToDate(this.userGame()?.finishingDate),
+  );
+  protected readonly userGameCreatedAt = computed(() =>
+    this.stringToDate(this.userGame()?.createdAt),
+  );
 
-  slug = input.required<string>();
+  readonly slug = input.required<string>();
 
   async ngOnInit(): Promise<void> {
     try {
-      this.game.set(await this.gameService.findBySlug(this.slug()));
-      console.log(this.game());
+      const game = await this.gameService.findBySlug(this.slug());
+      this.userGame.set(await this.findUserGame(game.id));
+      this.game.set(game);
     } catch (e) {
       if (e instanceof NotFoundError) {
         this.isNotFound.set(true);
@@ -65,7 +83,22 @@ export class GameDetail implements OnInit {
     });
   }
 
+  onEditClick() {}
+
   onReturnClick() {
     this.router.navigate(['/catalogue']);
+  }
+
+  private stringToDate(date?: string | null): Date | null {
+    return date ? new Date(date) : null;
+  }
+
+  private async findUserGame(gameId: number): Promise<ReturnUserGameDto | null> {
+    try {
+      return await this.userGameService.getByGameId(gameId);
+    } catch (e) {
+      if (e instanceof NotFoundError) return null;
+      throw e;
+    }
   }
 }

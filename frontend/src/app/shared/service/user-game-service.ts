@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable, Service } from '@angular/core';
-import { CreateUserGameDto, ReturnUserGameDto } from '../../features/add-game/model/user-game-dto';
+import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
+import { CreateUserGameDto, ReturnUserGameDto } from '../../features/add-game/model/user-game-dto';
 import { translateHttpError } from '../error/translate-http-error';
 import { PageResponse } from '../model/page-response.dto';
 
@@ -28,5 +28,11 @@ export class UserGameService {
     return await firstValueFrom(
       this.http.get<PageResponse<ReturnUserGameDto>>('/user-game', { params }),
     ).catch(translateHttpError);
+  }
+
+  async getByGameId(gameId: number): Promise<ReturnUserGameDto> {
+    return await firstValueFrom(this.http.get<ReturnUserGameDto>(`/user-game/${gameId}`)).catch(
+      translateHttpError,
+    );
   }
 }

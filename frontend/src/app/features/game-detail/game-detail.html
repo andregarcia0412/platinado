@@ -31,17 +31,25 @@
           <p class="text-fg-muted">Lançado em {{ game()?.firstReleaseDate | parseYear }}</p>
         </div>
 
-        <app-outlined-button
-          text="Adicionar à estante"
-          icon="/icons/add.svg"
-          (onClicked)="onAddClick()"
-        />
+        @if (userGame()) {
+          <app-outlined-button
+            text="Editar registro"
+            icon="/icons/edit.svg"
+            (onClicked)="onEditClick()"
+          />
+        } @else {
+          <app-outlined-button
+            text="Adicionar à estante"
+            icon="/icons/add.svg"
+            (onClicked)="onAddClick()"
+          />
+        }
 
         <hr class="border-line" />
 
         <div class="flex flex-col gap-2">
           <h3 class="text-label font-semibold text-xs">SOBRE</h3>
-          <p class="text-fg">{{ game()?.summary }}</p>
+          <p class="text-fg whitespace-pre-line">{{ game()?.summary }}</p>
         </div>
 
         <hr class="border-line" />
@@ -52,30 +60,52 @@
             <app-detail-item label="Tipo" [detail]="game()!.gameType.type | translateGameType" />
 
             @if (releaseDate()) {
-              <app-detail-item
-                label="Lançamento"
-                [detail]="
-                  releaseDate()!.toLocaleDateString('pt-br', {
-                    year: 'numeric',
-                    day: 'numeric',
-                    month: 'long',
-                  })
-                "
-              />
+              <app-detail-item label="Lançamento" [detail]="releaseDate()! | dateToString" />
             }
 
             <app-detail-item
               label="No catálogo desde"
-              [detail]="
-                this.createdAt()!.toLocaleDateString('pt-br', {
-                  year: 'numeric',
-                  day: 'numeric',
-                  month: 'long',
-                })
-              "
+              [detail]="this.createdAt()! | dateToString"
             />
           </ul>
         </div>
+
+        @if (userGame(); as userGame) {
+          <hr class="border-line" />
+
+          <div class="flex flex-col gap-2">
+            <h3 class="text-label font-semibold text-xs">PROGRESSO</h3>
+            <ul class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2">
+              @if (userGame.hoursPlayed) {
+                <app-detail-item
+                  label="Horas Jogadas"
+                  [detail]="userGame.hoursPlayed | formatHours"
+                />
+              }
+
+              @if (startingDate()) {
+                <app-detail-item label="Começou em" [detail]="startingDate()! | dateToString" />
+              }
+
+              @if (finishingDate()) {
+                <app-detail-item label="Platinou em" [detail]="finishingDate()! | dateToString" />
+              }
+
+              <app-detail-item
+                label="Na estante desde"
+                [detail]="userGameCreatedAt()! | dateToString"
+              />
+            </ul>
+          </div>
+
+          @if (userGame.note) {
+            <hr class="border-line" />
+            <div class="flex flex-col gap-2">
+              <h3 class="text-label font-semibold text-xs">ANOTAÇÕES</h3>
+              <p class="text-fg whitespace-pre-line">{{ userGame.note }}</p>
+            </div>
+          }
+        }
       </article>
     </section>
   }

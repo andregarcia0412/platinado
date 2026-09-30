@@ -16,9 +16,9 @@ export interface ReturnUserGameDto {
   game: ReturnGameDto;
   gameCompletionStatus: GameCompletionStatusDto;
   hoursPlayed: number | null;
-  startingDate: Date | null;
-  finishingDate: Date | null;
+  startingDate: string | null;
+  finishingDate: string | null;
   grade: number | null;
   note: string | null;
-  createdAt: Date;
+  createdAt: string;
 }
